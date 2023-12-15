@@ -32,8 +32,8 @@ FROM base as local
 
 # COPY --from=build-local /src/node_modules /src/node_modules
 
-CMD tail -f /dev/null
-# CMD [ "npm", "run", "dev" ]
+# CMD tail -f /dev/null
+CMD [ "npm", "run", "dev" ]
 
 #===================================================
 
