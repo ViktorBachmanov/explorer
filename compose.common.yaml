@@ -1,0 +1,70 @@
+services:
+  nginx:
+    build: 
+      context: ./src/nginx
+      dockerfile: ../../.docker/nginx/Dockerfile
+      target: ${TARGET}
+    ports: 
+      - "80:80"
+    volumes:
+      - ./src/laravel/:/var/www/html/
+    networks:
+      - internal
+    depends_on:
+      - laravel
+
+  laravel:
+    build: 
+      context: ./src/laravel
+      dockerfile: ../../.docker/laravel/Dockerfile
+      args:
+        HOST_UID: $HOST_UID
+    volumes:
+      - ./src/laravel/:/var/www/html/
+    networks:
+      - internal
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql/mysql-server:8.0
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+      # MYSQL_DATABASE: laravel
+      # MYSQL_USER:
+      # MYSQL_PASSWORD:
+    ports:
+      - 3306:3306
+    volumes:
+      - ./.docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - mysqldata:/var/lib/mysql
+    networks:
+      - internal
+    restart: unless-stopped
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=root
+      interval: 5s
+      retries: 10
+
+  vue:
+    build:
+      context: ./src/laravel
+      dockerfile: ../../.docker/vue/Dockerfile
+      target: ${TARGET}
+      args:
+        HOST_UID: $HOST_UID
+    volumes:
+      - ./src/laravel/:/src
+    networks:
+      - internal
+      
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  mysqldata:
+    driver: local
