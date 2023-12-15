@@ -1,3 +1,8 @@
+<script setup>
+import AppBar from './components/AppBar.vue';
+</script>
+
+
 <template>
-  <h2>Explorer</h2>
+  <AppBar />
 </template>
