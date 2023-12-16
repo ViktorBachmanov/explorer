@@ -21,26 +21,6 @@ class FolderSeeder extends Seeder
             ['name' => 'root']
         );
 
-        // Folder::firstOrCreate(
-        //     ['id' => 2],
-        //     ['name' => 'folder-1', 'parent_id' => 1]
-        // );
-
-        // Folder::firstOrCreate(
-        //     ['id' => 3],
-        //     ['name' => 'folder-2', 'parent_id' => 1]
-        // );
-
-        // Folder::firstOrCreate(
-        //     ['id' => 4],
-        //     ['name' => 'folder-11', 'parent_id' => 2]
-        // );
-
-        // Folder::firstOrCreate(
-        //     ['id' => 5],
-        //     ['name' => 'folder-12', 'parent_id' => 2]
-        // );
-
         $rootFolder->folders()->createMany([
             ['name' => self::FOLDER_1_NAME],
             ['name' => 'folder-2'],
@@ -50,5 +30,7 @@ class FolderSeeder extends Seeder
             ['name' => self::FOLDER_1_NAME],
             ['name' => 'folder-2'],
         ]);
+
+        Folder::create(['name' => 'empty-folder', 'parent_id' => 1]);
     }
 }

@@ -16,6 +16,10 @@ class FileSeeder extends Seeder
     public function run(): void
     {
         Folder::get()->each(function ($folder) {
+            if ($folder->name == 'empty-folder') {
+                return;
+            }
+            
             $folder->files()->createMany([
                 ['name' => 'file-1'],
                 ['name' => 'file-2'],
