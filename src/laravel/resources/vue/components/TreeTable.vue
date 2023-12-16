@@ -16,10 +16,8 @@ const { data: rootFolder } = await axios.get('/api/tree')
     </thead>
 
     <tbody>
-      <TreeTableRow :item="rootFolder" />
+      <TreeTableRow :item="rootFolder" :level="1" />
     </tbody>
   </table>
 </template>
 
-
-<style scoped></style>

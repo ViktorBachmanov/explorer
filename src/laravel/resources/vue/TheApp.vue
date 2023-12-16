@@ -11,3 +11,18 @@ import TreeTable from './components/TreeTable.vue';
     <TreeTable />
   </Suspense>
 </template>
+
+
+
+<style>
+th,
+td {
+  border: solid 0.5px;
+  border-color: black;
+  padding: 0.5em;
+
+  .dark & {
+    border-color: white;
+  }
+}
+</style>
