@@ -10,16 +10,6 @@ use App\Enums\Item as ItemEnum;
 class ItemController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index(string $items)
-    {
-        $itemClassName = ItemEnum::getMorphMap()[$items];
-
-        return $itemClassName::get();
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
