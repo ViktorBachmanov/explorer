@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('folders', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('parent_folder_id')
+            $table->foreignId('parent_id')
                 ->nullable()
-                ->constrained(table: 'folders', indexName: 'idx_parent_folder_id')
+                ->constrained(table: 'folders', indexName: 'idx_parent_id')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->string('name', 100);
-            $table->unique(['parent_folder_id', 'name']);
+            $table->unique(['parent_id', 'name']);
             
             $table->timestamps();
         });

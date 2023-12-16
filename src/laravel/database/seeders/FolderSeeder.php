@@ -22,17 +22,17 @@ class FolderSeeder extends Seeder
 
         Folder::firstOrCreate(
             ['id' => 2],
-            ['name' => 'folder-1', 'parent_folder_id' => 1]
+            ['name' => 'folder-1', 'parent_id' => 1]
         );
 
         Folder::firstOrCreate(
             ['id' => 3],
-            ['name' => 'folder-2', 'parent_folder_id' => 1]
+            ['name' => 'folder-2', 'parent_id' => 1]
         );
 
         Folder::firstOrCreate(
             ['id' => 4],
-            ['name' => 'folder-11', 'parent_folder_id' => 2]
+            ['name' => 'folder-11', 'parent_id' => 2]
         );
     }
 }
