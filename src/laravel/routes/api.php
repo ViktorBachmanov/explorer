@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TreeController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware(['web'])->group(function () {
+    Route::get('/tree', [TreeController::class, 'index']);
 
-Route::get('/tree', [TreeController::class, 'index']);
-
-Route::get('/users', function () {
-    return App\Models\User::get();
+    Route::get('/users', [UserController::class, 'index']);
+    Route::post('/login', [UserController::class, 'login']);
+    Route::post('/logout', [UserController::class, 'logout']);
 });
