@@ -17,6 +17,7 @@ services:
     build: 
       context: ./src/laravel
       dockerfile: ../../.docker/laravel/Dockerfile
+      target: ${TARGET}
       args:
         HOST_UID: $HOST_UID
     volumes:
