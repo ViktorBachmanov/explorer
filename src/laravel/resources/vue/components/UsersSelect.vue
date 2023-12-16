@@ -5,12 +5,12 @@ import { useUsersStore } from '../stores/users.js'
 
 const usersStore = useUsersStore()
 await usersStore.init()
-const { allUsers, currentUserComputed } = storeToRefs(usersStore)
+const { allUsers, currentUser } = storeToRefs(usersStore)
 </script>
 
 
 <template>
-  <select class="dark:bg-slate-900 dark:text-violet-200" v-model="currentUserComputed">
+  <select class="dark:bg-slate-900 dark:text-violet-200" v-model="currentUser">
     <option v-for="user in allUsers" :key="user.id" :value="user">{{ user.name }}</option>
   </select>
 </template>

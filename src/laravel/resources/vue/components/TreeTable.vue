@@ -19,7 +19,7 @@ const { data: rootFolder } = await axios.get('/api/tree')
         <th rowspan="2"></th>
         <th colspan="3">Access for current user</th>
         <th colspan="3">
-          Access for user
+          Access for
           <select class="dark:bg-slate-900 dark:text-violet-200" v-model="userAccessFor">
             <option v-for="user in notAdminUsers" :key="user.id" :value="user" :disabled="user.id == -1">{{ user.name }}
             </option>

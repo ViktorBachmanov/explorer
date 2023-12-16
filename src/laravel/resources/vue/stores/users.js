@@ -14,13 +14,9 @@ export const useUsersStore = defineStore('users', () => {
 
   const currentUser = ref(guestUser)
 
-  const currentUserComputed = computed({
-    get() {
-      return currentUser.value
-    },
-    set(user) {
-      login(user)
-    }
+  watch(currentUser, (user) => {
+    console.log('currentUser changed: ', user.name)
+    login(user)
   })
 
   const allUsers = computed(() => {
@@ -37,15 +33,6 @@ export const useUsersStore = defineStore('users', () => {
     email: 'empty@empty.ru'
   }
   const userAccessFor = ref(emptyUser)
-
-  // const cUserAccessFor = computed({
-  //   get() {
-  //     return userAccessFor.value
-  //   },
-  //   set(user) {
-  //     userAccessFor.value = user
-  //   }
-  // })
 
   watch(userAccessFor, (user) => {
     console.log('userAccessFor changed: ', user.name)
@@ -72,9 +59,7 @@ export const useUsersStore = defineStore('users', () => {
       return
     }
 
-    const { data: loggedInUser } = await axios.post('/api/login', { email: user.email, password: '123' })
-
-    currentUser.value = loggedInUser
+    await axios.post('/api/login', { email: user.email, password: '123' })
   }
 
   async function logout() {
@@ -84,5 +69,5 @@ export const useUsersStore = defineStore('users', () => {
 
   
 
-  return { init, login, logout, allUsers, currentUserComputed, notAdminUsers, userAccessFor }
+  return { init, login, logout, allUsers, currentUser, notAdminUsers, userAccessFor }
 })
