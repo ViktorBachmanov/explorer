@@ -3,12 +3,16 @@ import { ref } from 'vue'
 import TreeTableRowFile from './TreeTableRowFile.vue';
 import ArrowRight from './ArrowRight.vue'
 
-defineProps({
+const props = defineProps({
   folder: Object,
   level: Number,
+  initialOpen: {
+    type: Boolean,
+    default: false,
+  },
 })
 
-const isOpen = ref(false)
+const isOpen = ref(props.initialOpen)
 </script>
 
 

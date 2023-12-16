@@ -16,7 +16,7 @@ const { data: rootFolder } = await axios.get('/api/tree')
     </thead>
 
     <tbody>
-      <TreeTableRowFolder :folder="rootFolder" :level="1" />
+      <TreeTableRowFolder :folder="rootFolder" :level="1" :initial-open="true" />
     </tbody>
   </table>
 </template>
