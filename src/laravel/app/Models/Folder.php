@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use App\Contracts\Item;
+use App\Models\File;
 
 
 class Folder extends Model implements Item
@@ -20,5 +21,13 @@ class Folder extends Model implements Item
     public function folders(): HasMany
     {
         return $this->hasMany(Folder::class, 'parent_id');
+    }
+
+    /**
+     * Get the children files
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(FIle::class);
     }
 }
