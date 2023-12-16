@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import TreeTableRow from './TreeTableRow.vue';
+import TreeTableRowFolder from './TreeTableRowFolder.vue';
 
 const { data: rootFolder } = await axios.get('/api/tree')
 </script>
@@ -16,7 +16,7 @@ const { data: rootFolder } = await axios.get('/api/tree')
     </thead>
 
     <tbody>
-      <TreeTableRow :item="rootFolder" :level="1" />
+      <TreeTableRowFolder :folder="rootFolder" :level="1" />
     </tbody>
   </table>
 </template>
