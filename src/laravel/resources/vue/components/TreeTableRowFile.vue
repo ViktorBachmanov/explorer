@@ -1,4 +1,6 @@
 <script setup>
+import TheIndent from './TheIndent.vue';
+
 defineProps({
   file: Object,
   level: Number,
@@ -9,7 +11,10 @@ defineProps({
 <template>
   <tr>
     <td :style="{ paddingLeft: `${level * 1}em`, }">
-      {{ file.name }}
+      <div class="item-label">
+        <TheIndent />
+        {{ file.name }}
+      </div>
     </td>
     <td>
 

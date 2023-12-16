@@ -21,3 +21,10 @@ const { data: rootFolder } = await axios.get('/api/tree')
   </table>
 </template>
 
+
+<style>
+.item-label {
+  display: flex;
+  align-items: center;
+}
+</style>

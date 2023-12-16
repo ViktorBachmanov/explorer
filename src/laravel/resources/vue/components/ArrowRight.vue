@@ -20,7 +20,7 @@ defineProps({
 }
 
 svg {
-  /* margin-right: 0.33em; */
+  /* margin-right: 0.2em; */
   cursor: pointer;
   /* width: 32px; */
   display: inline;
