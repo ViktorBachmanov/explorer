@@ -11,7 +11,6 @@ const { allUsers, currentUserComputed } = storeToRefs(usersStore)
 
 <template>
   <select class="dark:bg-slate-900 dark:text-violet-200" v-model="currentUserComputed">
-    <option disabled value="">Select user</option>
     <option v-for="user in allUsers" :key="user.id" :value="user">{{ user.name }}</option>
   </select>
 </template>

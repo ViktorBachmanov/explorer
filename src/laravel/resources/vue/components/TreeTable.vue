@@ -1,6 +1,12 @@
 <script setup>
 import axios from 'axios'
+import { storeToRefs } from 'pinia'
 import TreeTableRowFolder from './TreeTableRowFolder.vue';
+import { useUsersStore } from '../stores/users.js'
+
+
+const usersStore = useUsersStore()
+const { notAdminUsers, userAccessFor } = storeToRefs(usersStore)
 
 const { data: rootFolder } = await axios.get('/api/tree')
 </script>
@@ -10,8 +16,25 @@ const { data: rootFolder } = await axios.get('/api/tree')
   <table class="dark:text-white">
     <thead>
       <tr>
-        <th></th>
-        <th></th>
+        <th rowspan="2"></th>
+        <th colspan="3">Access for current user</th>
+        <th colspan="3">
+          Access for user
+          <select class="dark:bg-slate-900 dark:text-violet-200" v-model="userAccessFor">
+            <option v-for="user in notAdminUsers" :key="user.id" :value="user" :disabled="user.id == -1">{{ user.name }}
+            </option>
+          </select>
+        </th>
+      </tr>
+
+      <tr>
+        <th>Read</th>
+        <th>Write</th>
+        <th>Grant</th>
+
+        <th>Read</th>
+        <th>Write</th>
+        <th>Grant</th>
       </tr>
     </thead>
 

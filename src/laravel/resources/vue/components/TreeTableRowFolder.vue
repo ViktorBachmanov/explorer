@@ -27,9 +27,13 @@ const isOpen = ref(props.initialOpen)
         <span class="folder-label bg-amber-200 dark:bg-amber-800">{{ folder.name }}</span>
       </div>
     </td>
-    <td>
 
-    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
   </tr>
 
   <template v-if="isOpen">

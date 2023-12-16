@@ -38,7 +38,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $visible = ['id', 'name', 'email'];
+    protected $visible = ['id', 'name', 'email', 'is_admin'];
 
     /**
      * The attributes that should be cast.

@@ -16,8 +16,12 @@ defineProps({
         {{ file.name }}
       </div>
     </td>
-    <td>
 
-    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
   </tr>
 </template>

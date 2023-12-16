@@ -1,16 +1,15 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import axios from 'axios'
 
 
 export const useUsersStore = defineStore('users', () => {
   const users = ref([])
 
-  const guestEmail = 'guest@guest.ru'
   const guestUser = {
     id: -1,
     name: 'guest',
-    email: guestEmail
+    email: 'guest@guest.ru'
   }
 
   const currentUser = ref(guestUser)
@@ -19,10 +18,46 @@ export const useUsersStore = defineStore('users', () => {
     get() {
       return currentUser.value
     },
-    set(email) {
-      login(email)
+    set(user) {
+      login(user)
     }
   })
+
+  const allUsers = computed(() => {
+    return [
+      guestUser,
+      ...users.value
+    ]
+  })
+
+
+  const emptyUser = {
+    id: -1,
+    name: 'Select user',
+    email: 'empty@empty.ru'
+  }
+  const userAccessFor = ref(emptyUser)
+
+  // const cUserAccessFor = computed({
+  //   get() {
+  //     return userAccessFor.value
+  //   },
+  //   set(user) {
+  //     userAccessFor.value = user
+  //   }
+  // })
+
+  watch(userAccessFor, (user) => {
+    console.log('userAccessFor changed: ', user.name)
+  })
+
+  const notAdminUsers = computed(() => {
+    return [
+      emptyUser,
+      ...users.value.filter(user => !user.is_admin)
+    ]
+  })
+
 
   async function init() {
     const { data } = await axios.get('/api/users')
@@ -33,7 +68,7 @@ export const useUsersStore = defineStore('users', () => {
   async function login(user) {
     await logout()
 
-    if(user.email == guestEmail) {      
+    if(user.email == guestUser.email) {      
       return
     }
 
@@ -47,12 +82,7 @@ export const useUsersStore = defineStore('users', () => {
     await axios.get('/sanctum/csrf-cookie')
   }
 
-  const allUsers = computed(() => {
-    return [
-      guestUser,
-      ...users.value
-    ]
-  })
+  
 
-  return { init, login, logout, allUsers, currentUserComputed }
+  return { init, login, logout, allUsers, currentUserComputed, notAdminUsers, userAccessFor }
 })
