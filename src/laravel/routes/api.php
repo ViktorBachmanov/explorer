@@ -22,3 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/tree', [TreeController::class, 'index']);
+
+Route::get('/users', function () {
+    return App\Models\User::get();
+});
