@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import TreeTableRowFile from './TreeTableRowFile.vue';
 import ArrowRight from './ArrowRight.vue'
 import TheIndent from './TheIndent.vue';
+import TreeTableAccessCells from './TreeTableAccessCells.vue'
 
 const props = defineProps({
   folder: Object,
@@ -28,12 +29,7 @@ const isOpen = ref(props.initialOpen)
       </div>
     </td>
 
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <TreeTableAccessCells :item-id="folder.id" />
   </tr>
 
   <template v-if="isOpen">

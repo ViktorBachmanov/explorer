@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-use App\Contracts\Item;
+use App\Models\Contracts\Item;
+use App\Models\Concerns\Item as ItemTrait;
 use App\Models\File;
 
 
 class Folder extends Model implements Item
 {
     use HasFactory;
+    use ItemTrait;
 
     /**
      * Get the children folders

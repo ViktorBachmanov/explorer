@@ -5,8 +5,6 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-// use App\Enums\Item as ItemEnum;
-
 
 class File extends JsonResource
 {
@@ -21,7 +19,6 @@ class File extends JsonResource
 
         return [
             'id' => $this->id,
-            // 'type' => ItemEnum::Files->value,
             'name' => $this->name,
         ];
     }
