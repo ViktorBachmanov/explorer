@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import axios from 'axios'
+import { useTreeStore } from './tree.js'
 
 
 export const useUsersStore = defineStore('users', () => {
@@ -12,11 +13,15 @@ export const useUsersStore = defineStore('users', () => {
     email: 'guest@guest.ru'
   }
 
+  const treeStore = useTreeStore()
+
   const currentUser = ref(guestUser)
 
-  watch(currentUser, (user) => {
-    console.log('currentUser changed: ', user.name)
-    login(user)
+  watch(currentUser, async (user) => {
+    // console.log('currentUser changed: ', user.name)
+    await login(user)
+
+    treeStore.fetchTree(userAccessFor.id)
   })
 
   const allUsers = computed(() => {

@@ -8,6 +8,14 @@ import { useTreeStore } from '../stores/tree.js'
 const props = defineProps({
   itemType: String, // folders | files
   itemId: Number,
+  accessSelf: {
+    type: Object,
+    default: {
+      1: null,
+      2: null,
+      3: null,
+    }
+  },
   accessForUser: {
     type: Object,
     default: {
@@ -43,11 +51,12 @@ async function changeAccess(event) {
 
 
 <template>
-  <td v-for="number in 3"></td>
+  <td v-for="(accessValue, accessType) in accessSelf" :key="accessType">
+    <span v-if="accessValue">v</span>
+  </td>
   <td v-for="(accessValue, accessType) in accessForUser" :key="accessType">
     <input v-if="accessValue !== null" type="checkbox" :name="accessType" :checked="accessValue"
       @click.prevent="changeAccess">
-    <!-- <span v-if="loading" class="text-slate-800 dark:text-slate-400">wait...</span> -->
   </td>
 </template>
 

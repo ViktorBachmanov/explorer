@@ -19,6 +19,7 @@ defineProps({
       </div>
     </td>
 
-    <TreeTableAccessCells item-type="files" :item-id="file.id" :accessForUser="file.accessForUser" />
+    <TreeTableAccessCells item-type="files" :item-id="file.id" :accessSelf="file.accessSelf"
+      :accessForUser="file.accessForUser" />
   </tr>
 </template>

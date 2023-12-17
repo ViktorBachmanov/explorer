@@ -29,7 +29,8 @@ const isOpen = ref(props.initialOpen)
       </div>
     </td>
 
-    <TreeTableAccessCells item-type="folders" :item-id="folder.id" :accessForUser="folder.accessForUser" />
+    <TreeTableAccessCells item-type="folders" :item-id="folder.id" :accessSelf="folder.accessSelf"
+      :accessForUser="folder.accessForUser" />
   </tr>
 
   <template v-if="isOpen">
