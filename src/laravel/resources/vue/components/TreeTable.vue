@@ -7,7 +7,7 @@ import { useTreeStore } from '../stores/tree.js'
 
 
 const usersStore = useUsersStore()
-const { notAdminUsers, userAccessFor } = storeToRefs(usersStore)
+const { usersAccessForSelect, userAccessFor } = storeToRefs(usersStore)
 
 const treeStore = useTreeStore()
 await treeStore.fetchTree()
@@ -28,7 +28,8 @@ watch(userAccessFor, async (user) => {
         <th colspan="3">
           Access for
           <select class="dark:bg-slate-900 dark:text-violet-200" v-model="userAccessFor">
-            <option v-for="user in notAdminUsers" :key="user.id" :value="user" :disabled="user.id == -1">{{ user.name }}
+            <option v-for="user in usersAccessForSelect" :key="user.id" :value="user" :disabled="user.id == -1">{{
+              user.name }}
             </option>
           </select>
         </th>

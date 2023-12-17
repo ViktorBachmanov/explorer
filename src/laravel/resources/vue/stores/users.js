@@ -39,10 +39,10 @@ export const useUsersStore = defineStore('users', () => {
   }
   const userAccessFor = ref(emptyUser)
 
-  const notAdminUsers = computed(() => {
+  const usersAccessForSelect = computed(() => {
     return [
       emptyUser,
-      ...users.value.filter(user => !user.is_admin)
+      ...users.value.filter(user => !user.is_admin && user.id !== currentUser.value.id)
     ]
   })
 
@@ -70,5 +70,5 @@ export const useUsersStore = defineStore('users', () => {
 
   
 
-  return { init, login, logout, allUsers, currentUser, notAdminUsers, userAccessFor }
+  return { init, login, logout, allUsers, currentUser, usersAccessForSelect, userAccessFor }
 })

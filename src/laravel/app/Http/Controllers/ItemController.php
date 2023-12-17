@@ -54,6 +54,11 @@ class ItemController extends Controller
             'access.type' => [Rule::enum(AccessEnum::class)],
             'access.value' => 'required|boolean',
         ]);
+
+        if ($validated['userIdAccessFor'] === $request->user()->id) {
+            abort(403, "You can't change access for yourself");
+        }
+
         $accessType = AccessEnum::from($validated['access']['type']);
         $accessValue = $validated['access']['value'];
 
