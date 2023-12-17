@@ -17,9 +17,12 @@ class File extends JsonResource
     {
         // return parent::toArray($request);
 
+        $userIdAccessFor = $request->input('userIdAccessFor');
+
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'accessForUser' => $this->when(isset($userIdAccessFor), fn () => $this->getAccessForUser($userIdAccessFor)),
         ];
     }
 }

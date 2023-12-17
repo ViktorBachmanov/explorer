@@ -2,9 +2,11 @@
 import axios from 'axios'
 import { storeToRefs } from 'pinia'
 import { useUsersStore } from '../stores/users.js'
+import { useTreeStore } from '../stores/tree.js'
 
 
 const props = defineProps({
+  itemType: String, // folders | files
   itemId: Number,
   accessForUser: {
     type: Object,
@@ -19,24 +21,21 @@ const props = defineProps({
 const usersStore = useUsersStore()
 const { userAccessFor } = storeToRefs(usersStore)
 
-
-// const loading = ref(false)
+const treeStore = useTreeStore()
 
 async function changeAccess(event) {
-  // loading.value = true
   event.target.disabled = true
   try {
-    await axios.patch(`/api/update-access/folders/${props.itemId}`, {
+    await axios.patch(`/api/update-access/${props.itemType}/${props.itemId}`, {
       userIdAccessFor: userAccessFor.value.id,
       access: {
         type: event.target.name,
         value: event.target.checked,
       }
     })
-    event.target.checked = true
+    await treeStore.fetchTree(userAccessFor.value.id)
   } catch (error) {
   } finally {
-    // loading.value = false
     event.target.disabled = false
   }
 }

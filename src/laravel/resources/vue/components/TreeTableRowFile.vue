@@ -1,5 +1,7 @@
 <script setup>
 import TheIndent from './TheIndent.vue';
+import TreeTableAccessCells from './TreeTableAccessCells.vue'
+
 
 defineProps({
   file: Object,
@@ -17,11 +19,6 @@ defineProps({
       </div>
     </td>
 
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <TreeTableAccessCells item-type="files" :item-id="file.id" :accessForUser="file.accessForUser" />
   </tr>
 </template>
