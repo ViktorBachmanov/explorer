@@ -18,11 +18,14 @@ class Folder extends JsonResource
     {
         // return parent::toArray($request);
 
+        $userIdAccessFor = $request->input('userIdAccessFor');
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'folders' => self::collection($this->folders),
             'files' => File::collection($this->files),
+            'accessForUser' => $this->when(isset($userIdAccessFor), fn () => $this->getAccessForUser($userIdAccessFor)),
         ];
     }
 }

@@ -34,10 +34,6 @@ export const useUsersStore = defineStore('users', () => {
   }
   const userAccessFor = ref(emptyUser)
 
-  watch(userAccessFor, (user) => {
-    console.log('userAccessFor changed: ', user.name)
-  })
-
   const notAdminUsers = computed(() => {
     return [
       emptyUser,

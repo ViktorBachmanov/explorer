@@ -1,14 +1,21 @@
 <script setup>
-import axios from 'axios'
+import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import TreeTableRowFolder from './TreeTableRowFolder.vue';
 import { useUsersStore } from '../stores/users.js'
+import { useTreeStore } from '../stores/tree.js'
 
 
 const usersStore = useUsersStore()
 const { notAdminUsers, userAccessFor } = storeToRefs(usersStore)
 
-const { data: rootFolder } = await axios.get('/api/tree')
+const treeStore = useTreeStore()
+await treeStore.fetchTree()
+const { rootFolder } = storeToRefs(treeStore)
+
+watch(userAccessFor, async (user) => {
+  await treeStore.fetchTree(user.id)
+})
 </script>
 
 
