@@ -28,8 +28,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('change-read-access', function (User $user, Item $item) {
-            return $item->getAccessForUser($user->id)[AccessEnum::Read->value]
+        Gate::define('change-access', function (User $user, Item $item, AccessEnum $accessType) {
+            return $item->getAccessForUser($user->id)[$accessType->value]
                 ? Response::allow()
                 : Response::deny("You don't have access rights to this item");
         });

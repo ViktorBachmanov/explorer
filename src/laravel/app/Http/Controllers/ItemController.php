@@ -61,10 +61,7 @@ class ItemController extends Controller
 
         $item = $itemClass::find($itemId);
 
-        // if (! Gate::allows('change-read-access', $item)) {
-        //     abort(403);
-        // }
-        Gate::authorize('change-read-access', $item);
+        Gate::authorize('change-access', [$item, $accessType]);
 
         $affectedRows = $item->users()->updateExistingPivot($validated['userIdAccessFor'], [
             $accessType->value => $accessValue,
