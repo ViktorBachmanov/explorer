@@ -26,8 +26,14 @@ trait Item
 
     public function getAccessForUser(int $userId): array
     {
+        if (User::find($userId)->is_admin) {
+            foreach (AccessEnum::cases() as $case) {
+                $accesses[$case->value] = true;
+            }
+            return $accesses;
+        }
+
         $user = $this->users()->firstWhere('users.id', $userId);
-        // $pivot = $this->users()->one()->ofMany('id', $userId)->pivot;
 
         foreach (AccessEnum::cases() as $case) {
             $accesses[$case->value] = $user

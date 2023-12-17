@@ -23,7 +23,7 @@ class Item extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'accessSelf' => $this->when($request->user(), fn () => $this->getAccessForUser($request->user()->id)),
-            'accessForUser' => $this->when(isset($userIdAccessFor), fn () => $this->getAccessForUser($userIdAccessFor)),
+            'accessForUser' => $this->when(isset($userIdAccessFor) && $userIdAccessFor != -1, fn () => $this->getAccessForUser($userIdAccessFor)),
             'folders' => $this->when(($this->resource instanceof Folder), fn () => self::collection($this->folders)),
             'files' => $this->when(($this->resource instanceof Folder), fn () => self::collection($this->files)),
         ];

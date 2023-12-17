@@ -21,7 +21,7 @@ export const useUsersStore = defineStore('users', () => {
     // console.log('currentUser changed: ', user.name)
     await login(user)
 
-    treeStore.fetchTree(userAccessFor.id)
+    await treeStore.fetchTree(userAccessFor.value.id)
   })
 
   const allUsers = computed(() => {
