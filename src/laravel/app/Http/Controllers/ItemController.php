@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Validation\Rule;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Enums\Access as AccessEnum;
 
 
@@ -59,6 +61,10 @@ class ItemController extends Controller
 
         $item = $itemClass::find($itemId);
 
+        // if (! Gate::allows('change-read-access', $item)) {
+        //     abort(403);
+        // }
+        Gate::authorize('change-read-access', $item);
 
         $affectedRows = $item->users()->updateExistingPivot($validated['userIdAccessFor'], [
             $accessType->value => $accessValue,
