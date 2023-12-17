@@ -21,6 +21,6 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('phpinfo', function () {
-    phpinfo();
-});
+// Route::get('phpinfo', function () {
+//     phpinfo();
+// });

@@ -1,6 +1,8 @@
 <script setup>
-import { ref } from 'vue'
 import axios from 'axios'
+import { storeToRefs } from 'pinia'
+import { useUsersStore } from '../stores/users.js'
+
 
 const props = defineProps({
   itemId: Number,
@@ -14,24 +16,28 @@ const props = defineProps({
   }
 })
 
-const accessTypes = ['read', 'write', 'grant']
+const usersStore = useUsersStore()
+const { userAccessFor } = storeToRefs(usersStore)
 
-const loading = ref(false)
+
+// const loading = ref(false)
 
 async function changeAccess(event) {
-  loading.value = true
+  // loading.value = true
+  event.target.disabled = true
   try {
     await axios.patch(`/api/update-access/folders/${props.itemId}`, {
-      userIdAccessFor: 3,
+      userIdAccessFor: userAccessFor.value.id,
       access: {
         type: event.target.name,
         value: event.target.checked,
       }
     })
+    event.target.checked = true
   } catch (error) {
-    event.preventDefault()
   } finally {
-    loading.value = false
+    // loading.value = false
+    event.target.disabled = false
   }
 }
 </script>
@@ -40,8 +46,9 @@ async function changeAccess(event) {
 <template>
   <td v-for="number in 3"></td>
   <td v-for="(accessValue, accessType) in accessForUser" :key="accessType">
-    <input v-if="accessValue !== null" type="checkbox" :name="accessType" :checked="accessValue" @click="changeAccess">
-    <span v-if="loading" class="text-slate-800 dark:text-slate-400">wait...</span>
+    <input v-if="accessValue !== null" type="checkbox" :name="accessType" :checked="accessValue"
+      @click.prevent="changeAccess">
+    <!-- <span v-if="loading" class="text-slate-800 dark:text-slate-400">wait...</span> -->
   </td>
 </template>
 
