@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Folder;
-use App\Http\Resources\Folder as FolderResource;
+use App\Http\Resources\Item as ItemResource;
 
 
 class TreeController extends Controller
@@ -15,6 +15,6 @@ class TreeController extends Controller
      */
     public function index()
     {
-        return new FolderResource(Folder::firstWhere('name', 'root'));
+        return new ItemResource(Folder::firstWhere('name', 'root'));
     }
 }
