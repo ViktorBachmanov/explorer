@@ -29,5 +29,6 @@ Route::middleware(['web'])->group(function () {
     Route::post('/login', [UserController::class, 'login']);
     Route::post('/logout', [UserController::class, 'logout']);
 
-    Route::patch('/update-access/{items}/{id}', [ItemController::class, 'updateAccess']);
+    Route::patch('/update-access/{items}/{id}', [ItemController::class, 'updateAccess'])
+        ->middleware('auth:sanctum');
 });
