@@ -27,7 +27,7 @@ const props = defineProps({
 })
 
 const usersStore = useUsersStore()
-const { userAccessFor } = storeToRefs(usersStore)
+const { userAccessFor, currentUser } = storeToRefs(usersStore)
 
 const treeStore = useTreeStore()
 
@@ -55,7 +55,7 @@ async function changeAccess(event) {
     <span v-if="accessValue">v</span>
   </td>
   <td v-for="(accessValue, accessType) in accessForUser" :key="accessType">
-    <input v-if="accessValue !== null" type="checkbox" :name="accessType" :checked="accessValue"
+    <input v-if="accessValue !== null && currentUser.id !== -1" type="checkbox" :name="accessType" :checked="accessValue"
       @click.prevent="changeAccess" :disabled="!accessSelf[accessType]">
   </td>
 </template>
