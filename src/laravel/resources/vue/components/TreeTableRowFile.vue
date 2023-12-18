@@ -1,4 +1,5 @@
 <script setup>
+import { inject } from 'vue'
 import TheIndent from './TheIndent.vue';
 import TreeTableAccessCells from './TreeTableAccessCells.vue'
 
@@ -7,6 +8,8 @@ defineProps({
   file: Object,
   level: Number,
 })
+
+const fileEditor = inject('fileEditor')
 </script>
 
 
@@ -15,7 +18,7 @@ defineProps({
     <td :style="{ paddingLeft: `${level * 1}em`, }">
       <div class="item-label">
         <TheIndent />
-        {{ file.name }}
+        <span class="p-2 cursor-pointer" @click="fileEditor.open(file.id)">{{ file.name }}</span>
       </div>
     </td>
 

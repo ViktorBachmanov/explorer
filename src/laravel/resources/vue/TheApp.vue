@@ -1,6 +1,12 @@
 <script setup>
+import { ref, provide } from 'vue'
 import AppBar from './components/AppBar.vue';
 import TreeTable from './components/TreeTable.vue';
+import FileEditor from './components/FileEditor.vue';
+
+const fileEditor = ref(null)
+
+provide('fileEditor', fileEditor)
 </script>
 
 
@@ -12,6 +18,8 @@ import TreeTable from './components/TreeTable.vue';
       <TreeTable />
     </Suspense>
   </main>
+
+  <FileEditor ref="fileEditor" />
 </template>
 
 
