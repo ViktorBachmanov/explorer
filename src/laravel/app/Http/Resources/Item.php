@@ -19,10 +19,15 @@ class Item extends JsonResource
     {
         $userIdAccessFor = $request->input('userIdAccessFor');
 
+        $user = $request->user();
+        $accessSelf = $user
+            ? $this->getAccessForUser($request->user()->id)
+            : $this->getAccesForGuest();
+
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'accessSelf' => $this->when($request->user(), fn () => $this->getAccessForUser($request->user()->id)),
+            'accessSelf' => $accessSelf,
             'accessForUser' => $this->when(isset($userIdAccessFor) && $userIdAccessFor != -1, fn () => $this->getAccessForUser($userIdAccessFor)),
             'folders' => $this->when(($this->resource instanceof Folder), fn () => self::collection($this->folders)),
             'files' => $this->when(($this->resource instanceof Folder), fn () => self::collection($this->files)),

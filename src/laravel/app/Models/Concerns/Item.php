@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 use App\Models\User;
 use App\Enums\Access as AccessEnum;
+use App\Models\Folder;
 
 trait Item
 {
@@ -41,6 +42,16 @@ trait Item
                 : false;
         }
 
+        return $accesses;
+    }
+
+    public function getAccesForGuest(): array 
+    {
+        foreach (AccessEnum::cases() as $case) {
+            $accesses[$case->value] = $case === AccessEnum::Read && $this instanceof Folder
+                ? true
+                : false;
+        }
         return $accesses;
     }
 }

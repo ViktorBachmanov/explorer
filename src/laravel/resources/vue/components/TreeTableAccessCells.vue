@@ -55,7 +55,7 @@ async function changeAccess(event) {
     <span v-if="accessValue">v</span>
   </td>
   <td v-for="(accessValue, accessType) in accessForUser" :key="accessType">
-    <input v-if="accessValue !== null && currentUser.id !== -1" type="checkbox" :name="accessType" :checked="accessValue"
+    <input v-if="currentUser.id !== -1" type="checkbox" :name="accessType" :checked="accessValue"
       @click.prevent="changeAccess" :disabled="!accessSelf[accessType]">
   </td>
 </template>
