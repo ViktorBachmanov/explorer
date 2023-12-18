@@ -5,4 +5,4 @@ source .env
 
 export TARGET=$ENV
 
-docker compose -f compose.common.yaml -f compose.${ENV}.yaml run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d demo.cnc-op.ru
+docker compose -f compose.common.yaml -f compose.${ENV}.yaml run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d explorer.cnc-op.ru
