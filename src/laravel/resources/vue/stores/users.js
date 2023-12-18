@@ -18,8 +18,9 @@ export const useUsersStore = defineStore('users', () => {
   const currentUser = ref(guestUser)
 
   watch(currentUser, async (user) => {
-    // console.log('currentUser changed: ', user.name)
-    await login(user)
+    if (user.id === userAccessFor.value.id) {
+      userAccessFor.value = emptyUser
+    }    await login(user)
 
     await treeStore.fetchTree(userAccessFor.value.id)
   })
