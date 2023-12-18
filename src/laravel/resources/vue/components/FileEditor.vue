@@ -39,11 +39,11 @@ function escape(e) {
   }
 }
 
-const submitted = ref(false)
+// const submitted = ref(false)
 const submitHandler = async () => {
   // Let's pretend this is an ajax request:
   await new Promise((r) => setTimeout(r, 1000))
-  submitted.value = true
+  // submitted.value = true
 }
 </script>
 
@@ -54,7 +54,14 @@ const submitHandler = async () => {
       <h2 class="text-xl font-bold mb-4">Edit file</h2>
       <FormKit type="form" :actions="false" #default="{ disabled }" @submit="submitHandler">
         <FormKit name="text" type="textarea" outer-class="dark:bg-gray-800 dark:text-zinc-200 p-2" v-model="text" />
-        <FormKit type="submit" :disabled="disabled || !textWasChanged" label="Save" />
+        <div class="flex">
+          <FormKit type="submit" :disabled="disabled || !textWasChanged">
+            <span v-if="disabled"
+              class='w-5 h-5 border-2 border-white border-r-transparent mr-2 rounded-full animate-spin'></span>
+            <span>Save</span>
+          </FormKit>
+          <FormKit type="button" :disabled="disabled" label="Close" @click="close" />
+        </div>
       </FormKit>
     </div>
   </Transition>
