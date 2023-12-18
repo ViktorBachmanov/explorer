@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Models\Folder;
+use App\Enums\Access;
 
 
 class Item extends JsonResource
@@ -29,8 +30,10 @@ class Item extends JsonResource
             'name' => $this->name,
             'accessSelf' => $accessSelf,
             'accessForUser' => $this->when(isset($userIdAccessFor) && $userIdAccessFor != -1, fn () => $this->getAccessForUser($userIdAccessFor)),
-            'folders' => $this->when(($this->resource instanceof Folder), fn () => self::collection($this->folders)),
-            'files' => $this->when(($this->resource instanceof Folder), fn () => self::collection($this->files)),
+            'folders' => $this->when(($this->resource instanceof Folder && $accessSelf[Access::Read->value]), 
+                fn () => self::collection($this->folders)),
+            'files' => $this->when(($this->resource instanceof Folder && $accessSelf[Access::Read->value]), 
+                fn () => self::collection($this->files)),
         ];
     }
 }

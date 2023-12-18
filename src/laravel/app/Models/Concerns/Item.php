@@ -48,9 +48,7 @@ trait Item
     public function getAccesForGuest(): array 
     {
         foreach (AccessEnum::cases() as $case) {
-            $accesses[$case->value] = $case === AccessEnum::Read && $this instanceof Folder
-                ? true
-                : false;
+            $accesses[$case->value] = false;
         }
         return $accesses;
     }

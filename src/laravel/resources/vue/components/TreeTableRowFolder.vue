@@ -23,7 +23,7 @@ const isOpen = ref(props.initialOpen)
     <td :style="{ paddingLeft: `${level * 1}em`, }">
       <div class="item-label">
         <TheIndent>
-          <ArrowRight v-if="folder.folders.length || folder.files.length" :down="isOpen" @click="isOpen = !isOpen" />
+          <ArrowRight v-if="folder.folders?.length || folder.files?.length" :down="isOpen" @click="isOpen = !isOpen" />
         </TheIndent>
         <span class="folder-label bg-amber-200 dark:bg-amber-800">{{ folder.name }}</span>
       </div>
