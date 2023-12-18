@@ -27,7 +27,7 @@ watch(userAccessFor, async (user) => {
         <th colspan="3">Access for current user</th>
         <th colspan="3">
           Access for
-          <select class="dark:bg-slate-900 dark:text-violet-200" v-model="userAccessFor">
+          <select class="dark:bg-stone-800 dark:text-violet-200" v-model="userAccessFor">
             <option v-for="user in usersAccessForSelect" :key="user.id" :value="user" :disabled="user.id == -1">{{
               user.name }}
             </option>

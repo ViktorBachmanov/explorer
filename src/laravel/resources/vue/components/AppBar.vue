@@ -19,5 +19,7 @@ import ThemeButton from './ThemeButton.vue';
 .app-bar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
 }
 </style>

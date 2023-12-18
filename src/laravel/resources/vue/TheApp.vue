@@ -7,14 +7,20 @@ import TreeTable from './components/TreeTable.vue';
 <template>
   <AppBar />
 
-  <Suspense>
-    <TreeTable />
-  </Suspense>
+  <main>
+    <Suspense>
+      <TreeTable />
+    </Suspense>
+  </main>
 </template>
 
 
 
 <style>
+table {
+  margin: 1em auto;
+}
+
 th,
 td {
   border: solid 0.5px;
@@ -23,6 +29,18 @@ td {
 
   .dark & {
     border-color: white;
+  }
+}
+
+select {
+  padding: 0.5em;
+  margin: 0.5em;
+  border-radius: 0.5em;
+  border: 1px solid;
+  border-color: blue;
+
+  .dark & {
+    border-color: rgb(11, 86, 61);
   }
 }
 </style>

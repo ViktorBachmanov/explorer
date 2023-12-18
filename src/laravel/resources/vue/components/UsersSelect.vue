@@ -10,11 +10,11 @@ const { allUsers, currentUser } = storeToRefs(usersStore)
 
 
 <template>
-  <select class="dark:bg-slate-900 dark:text-violet-200" v-model="currentUser">
-    <option v-for="user in allUsers" :key="user.id" :value="user">{{ user.name }}</option>
-  </select>
+  <div>
+    <span class="mx-2 font-medium">Current user:</span>
+    <select class="dark:bg-stone-800 dark:text-violet-200" v-model="currentUser">
+      <option v-for="user in allUsers" :key="user.id" :value="user">{{ user.name }}</option>
+    </select>
+  </div>
 </template>
 
-
-<!-- <style scoped>
-</style> -->

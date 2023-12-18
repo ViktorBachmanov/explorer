@@ -14,7 +14,7 @@
 
         @vite(['resources/css/app.css', 'resources/vue/app.js'])
     </head>
-    <body class="dark:bg-black dark:text-white">
+    <body class="dark:bg-neutral-900 dark:text-white">
         <div id='app-vue'></div>
     </body>
 </html>

@@ -1,7 +1,8 @@
 window.localStorageThemeKey = 'theme_exp'
-window.defaultTheme = 'dark'
+window.defaultTheme = 'light'
 
 // 'dark' | 'light'
+
 const theme = localStorage.getItem(window.localStorageThemeKey) || window.defaultTheme 
 
 if (theme === 'dark') {

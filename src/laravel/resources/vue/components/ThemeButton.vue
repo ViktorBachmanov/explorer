@@ -19,7 +19,7 @@ function toggleTheme() {
 </script>
 
 <template>
-  <button class="p-2 border rounded border-black dark:border-slate-300" @click="toggleTheme">
+  <button class="p-2 m-2 border rounded border-black dark:border-slate-300" @click="toggleTheme">
     <svg xmlns="http://www.w3.org/2000/svg" :fill="theme === 'dark' ? 'silver' : 'black'" viewBox="0 0 24 24" width="24"
       height="24">
       <title>brightness-4</title>
