@@ -49,6 +49,10 @@ export const useUsersStore = defineStore('users', () => {
 
 
   async function init() {
+    await login({
+      email: 'admin-1@mail.ru',
+    })
+    
     const { data } = await axios.get('/api/users')
     users.value = data.users
     currentUser.value = data.currentUser || guestUser
