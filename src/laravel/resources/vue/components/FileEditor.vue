@@ -1,13 +1,15 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 const isOpen = ref(false)
 
 const fileId = ref(null)
 const text = ref('')
 
+let inititalText;
+
 function open(id, content) {
-  text.value = content
+  text.value = inititalText = content
   isOpen.value = true
 }
 
@@ -15,6 +17,8 @@ function close() {
   console.log('close')
   isOpen.value = false
 }
+
+const textWasChanged = computed(() => inititalText !== text.value)
 
 defineExpose({
   open,
@@ -34,20 +38,23 @@ function escape(e) {
     close()
   }
 }
+
+const submitted = ref(false)
+const submitHandler = async () => {
+  // Let's pretend this is an ajax request:
+  await new Promise((r) => setTimeout(r, 1000))
+  submitted.value = true
+}
 </script>
 
 
 <template>
   <Transition>
     <div class="fixed inset-0 bg-gray-500/50 flex items-center justify-center" v-if="isOpen">
-      <!-- <div class="w-min">
-        <textarea class="dark:bg-gray-800 dark:text-zinc-200 p-2" v-model="text"></textarea>
-        <button @click="close">Close</button>
-      </div>
-     -->
       <h2 class="text-xl font-bold mb-4">Edit file</h2>
-      <FormKit type="form">
-        <FormKit name="text" type="textarea" />
+      <FormKit type="form" :actions="false" #default="{ disabled }" @submit="submitHandler">
+        <FormKit name="text" type="textarea" outer-class="dark:bg-gray-800 dark:text-zinc-200 p-2" v-model="text" />
+        <FormKit type="submit" :disabled="disabled || !textWasChanged" label="Save" />
       </FormKit>
     </div>
   </Transition>
