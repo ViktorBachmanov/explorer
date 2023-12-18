@@ -10,6 +10,11 @@ import ThemeButton from './ThemeButton.vue';
       <UsersSelect />
     </Suspense>
 
+    <a href="https://github.com/ViktorBachmanov/explorer"
+      class="p-2 rounded bg-slate-300 dark:bg-slate-800 dark:text-gray-100 shadow-md">
+      Source code
+    </a>
+
     <ThemeButton />
   </div>
 </template>
