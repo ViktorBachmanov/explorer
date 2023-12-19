@@ -25,15 +25,14 @@ class Item extends JsonResource
             ? $this->getAccessForUser($request->user()->id)
             : $this->getAccesForGuest();
 
-        return [
+        $commonProps = [
             'id' => $this->id,
             'name' => $this->name,
             'accessSelf' => $accessSelf,
-            'accessForUser' => $this->when(isset($userIdAccessFor) && $userIdAccessFor != -1, fn () => $this->getAccessForUser($userIdAccessFor)),
-            'folders' => $this->when(($this->resource instanceof Folder && $accessSelf[Access::Read->value]), 
-                fn () => self::collection($this->folders)),
-            'files' => $this->when(($this->resource instanceof Folder && $accessSelf[Access::Read->value]), 
-                fn () => self::collection($this->files)),
+            'accessForUser' => $this->when(isset($userIdAccessFor) && $userIdAccessFor != -1, 
+                fn () => $this->getAccessForUser($userIdAccessFor)),            
         ];
+
+        return $commonProps + $this->getSpecificProps($accessSelf[Access::Read->value]);
     }
 }

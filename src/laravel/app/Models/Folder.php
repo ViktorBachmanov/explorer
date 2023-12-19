@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Contracts\Item;
 use App\Models\Concerns\Item as ItemTrait;
 use App\Models\File;
+use App\Http\Resources\Item as ItemResource;
 
 
 class Folder extends Model implements Item
@@ -31,5 +32,18 @@ class Folder extends Model implements Item
     public function files(): HasMany
     {
         return $this->hasMany(FIle::class);
+    }
+
+    public function getSpecificProps(bool $accessSelfRead): array
+    {
+        return [
+            'folders' => $accessSelfRead 
+                ? ItemResource::collection($this->folders)
+                : [],
+            'files' => $accessSelfRead 
+                ? ItemResource::collection($this->files)
+                : [],
+        ];
+
     }
 }

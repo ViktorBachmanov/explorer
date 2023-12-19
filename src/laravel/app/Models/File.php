@@ -14,4 +14,14 @@ class File extends Model implements Item
     use HasFactory;
     use ItemTrait;
 
+    public function getSpecificProps(bool $accessSelfRead): array
+    {
+        return [
+            'text' => $accessSelfRead 
+                ? $this->text
+                : null,
+        ];
+        
+    }
+
 }

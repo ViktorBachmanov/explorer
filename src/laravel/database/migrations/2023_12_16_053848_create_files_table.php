@@ -20,7 +20,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('name', 100);
             $table->unique(['folder_id', 'name']);
-            $table->string('text')->nullable();
+            $table->string('text')->default('');
 
             $table->timestamps();
         });
