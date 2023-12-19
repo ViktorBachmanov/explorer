@@ -1,14 +1,19 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import axios from 'axios'
+import { useTreeStore } from '../stores/tree.js'
+
 
 const isOpen = ref(false)
 
-const fileId = ref(null)
 const text = ref('')
 
-let inititalText;
+const treeStore = useTreeStore()
+
+let fileId, inititalText;
 
 function open(id, content) {
+  fileId = id
   text.value = inititalText = content
   isOpen.value = true
 }
@@ -39,11 +44,16 @@ function escape(e) {
   }
 }
 
-// const submitted = ref(false)
-const submitHandler = async () => {
-  // Let's pretend this is an ajax request:
-  await new Promise((r) => setTimeout(r, 1000))
-  // submitted.value = true
+async function handleSubmit() {
+  try {
+    await axios.patch(`/api/files/${fileId}`, {
+      text: text.value
+    })
+    await treeStore.fetchTree()
+    close()
+  } catch (error) {
+    console.error(error)
+  }
 }
 </script>
 
@@ -52,7 +62,7 @@ const submitHandler = async () => {
   <Transition>
     <div class="fixed inset-0 bg-gray-500/50 flex items-center justify-center" v-if="isOpen">
       <h2 class="text-xl font-bold mb-4">Edit file</h2>
-      <FormKit type="form" :actions="false" #default="{ disabled }" @submit="submitHandler">
+      <FormKit type="form" :actions="false" #default="{ disabled }" @submit="handleSubmit">
         <FormKit name="text" type="textarea" outer-class="dark:bg-gray-800 dark:text-zinc-200 p-2" v-model="text" />
         <div class="flex">
           <FormKit type="submit" :disabled="disabled || !textWasChanged">

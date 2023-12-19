@@ -14,6 +14,13 @@ class File extends Model implements Item
     use HasFactory;
     use ItemTrait;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['text'];
+
     public function getSpecificProps(bool $accessSelfRead): array
     {
         return [

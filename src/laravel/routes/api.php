@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TreeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +31,7 @@ Route::middleware(['web'])->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
 
     Route::patch('/update-access/{items}/{id}', [ItemController::class, 'updateAccess'])
+        ->middleware('auth:sanctum');
+    Route::patch('/files/{file}', [FileController::class, 'update'])
         ->middleware('auth:sanctum');
 });
