@@ -18,7 +18,9 @@ const fileEditor = inject('fileEditor')
     <td :style="{ paddingLeft: `${level * 1}em`, }">
       <div class="item-label">
         <TheIndent />
-        <span class="p-2 cursor-pointer" @click="fileEditor.open(file.id, file.text)">{{ file.name }}</span>
+        <span class="p-2 cursor-pointer" @click="fileEditor.open(file.id, file.text, file.accessSelf.write)">
+          {{ file.name }}
+        </span>
       </div>
     </td>
 

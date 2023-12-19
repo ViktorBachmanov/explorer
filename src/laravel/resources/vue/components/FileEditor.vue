@@ -7,19 +7,20 @@ import { useTreeStore } from '../stores/tree.js'
 const isOpen = ref(false)
 
 const text = ref('')
+const writeAccess = ref(null)
 
 const treeStore = useTreeStore()
 
 let fileId, initialText
 
-function open(id, content) {
+function open(id, content, selfWriteAccess) {
   fileId = id
   text.value = initialText = content
+  writeAccess.value = selfWriteAccess
   isOpen.value = true
 }
 
 function close() {
-  console.log('close')
   isOpen.value = false
 }
 
@@ -37,7 +38,6 @@ onUnmounted(() => {
 
 function escape(e) {
   if (e.key === 'Escape') {
-    console.log('escape key')
     close()
   }
 }
@@ -67,25 +67,36 @@ async function handleSubmit(data, node) {
 function textChanged(node) {
   return node.value !== initialText
 }
+
+function handleClose(e) {
+  if (!e.dontClose) {
+    close()
+  }
+}
+
+function handleClickOnDialog(e) {
+  e.dontClose = true
+}
 </script>
 
 
 <template>
   <Transition>
-    <div class="fixed inset-0 bg-gray-500/50 flex items-center justify-center" v-if="isOpen">
-      <div class="bg-stone-500 rounded p-2">
+    <div class="fixed inset-0 bg-gray-500/50 flex items-center justify-center" v-if="isOpen" @click="handleClose">
+      <div class="bg-stone-500 rounded p-2" @click="handleClickOnDialog">
         <h3 class="text-xl font-medium mb-4">File text</h3>
-        <FormKit type="form" :actions="false" #default="{ disabled, state: { valid } }" @submit="handleSubmit">
+        <FormKit type="form" :actions="false" #default="{ disabled, state: { valid } }" @submit="handleSubmit"
+          :config="{ validationVisibility: 'dirty' }">
           <FormKit name="text" type="textarea" :validation-rules="{ textChanged }" validation="+textChanged"
-            input-class="dark:bg-gray-800 dark:text-zinc-200 p-2 w-80" v-model="text" />
+            input-class="dark:bg-gray-800 dark:text-zinc-200 p-2 w-80" v-model="text" :readonly="!writeAccess" />
           <div class="flex justify-end gap-x-2">
-            <FormKit type="submit" :disabled="!valid || disabled" outer-class="grow-0">
+            <FormKit type="submit" :disabled="!valid || disabled" outer-class="grow-0" v-if="writeAccess">
               <span v-if="disabled"
                 class='w-5 h-5 border-2 border-white border-r-transparent mr-2 rounded-full animate-spin'></span>
               <span>Save</span>
             </FormKit>
             <FormKit type="button" :disabled="disabled" label="Close" @click="close"
-              input-class="dark:bg-slate-700 dark:text-zinc-200" outer-class="grow-0" />
+              input-class="dark:bg-sky-800 dark:text-zinc-200" outer-class="grow-0" />
           </div>
         </FormKit>
       </div>
