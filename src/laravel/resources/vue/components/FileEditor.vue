@@ -86,7 +86,7 @@ function handleClickOnDialog(e) {
       <div class="bg-stone-500 rounded p-2" @click="handleClickOnDialog">
         <h3 class="text-xl font-medium mb-4">File text</h3>
         <FormKit type="form" :actions="false" #default="{ disabled, state: { valid } }" @submit="handleSubmit"
-          :config="{ validationVisibility: 'dirty' }">
+          :config="{ validationVisibility: 'submit' }">
           <FormKit name="text" type="textarea" :validation-rules="{ textChanged }" validation="+textChanged"
             input-class="dark:bg-gray-800 dark:text-zinc-200 p-2 w-80" v-model="text" :readonly="!writeAccess" />
           <div class="flex justify-end gap-x-2">
