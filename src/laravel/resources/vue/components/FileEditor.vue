@@ -44,15 +44,25 @@ function escape(e) {
   }
 }
 
-async function handleSubmit() {
+async function handleSubmit(data, node) {
   try {
-    await axios.patch(`/api/files/${fileId}`, {
-      text: text.value
-    })
+    await axios.patch(`/api/files/${fileId}`, data)
     await treeStore.fetchTree()
     close()
   } catch (error) {
-    console.error(error)
+    if (error.response.status === 403) {
+      node.setErrors(
+        ['Error'],
+        {
+          text: error.response.data.message
+        }
+      )
+    } else {
+      node.setErrors(
+        ['Error'],
+        error.response.data.errors
+      )
+    }
   }
 }
 </script>

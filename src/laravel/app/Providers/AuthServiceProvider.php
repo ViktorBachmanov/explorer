@@ -8,8 +8,11 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Auth\Access\Response;
 
 use App\Models\User;
+use App\Models\File;
 use App\Models\Contracts\Item;
 use App\Enums\Access as AccessEnum;
+use App\Policies\FilePolicy;
+
 
 
 class AuthServiceProvider extends ServiceProvider
@@ -20,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        File::class => FilePolicy::class,
     ];
 
     /**

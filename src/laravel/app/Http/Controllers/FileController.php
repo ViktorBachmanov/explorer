@@ -38,6 +38,8 @@ class FileController extends Controller
      */
     public function update(Request $request, File $file)
     {
+        // $this->authorize('update', $file);
+
         $file->update([
             'text' => $request->json('text'),
         ]);
