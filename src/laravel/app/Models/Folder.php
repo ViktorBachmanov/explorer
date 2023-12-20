@@ -23,7 +23,7 @@ class Folder extends Model implements Item
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'parent_id'];
 
     /**
      * Get the children folders

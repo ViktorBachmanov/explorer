@@ -21,11 +21,12 @@ class ItemController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string',
+            'parentFolderId' => 'required|int',
         ]);
 
         $itemClass = Relation::getMorphedModel($items);
 
-        $itemClass::createItem($validated['name']);
+        $itemClass::createItem($validated['name'], $validated['parentFolderId']);
 
         return response()->json('Item has been created successfully', 201);
     }

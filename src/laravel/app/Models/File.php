@@ -19,7 +19,7 @@ class File extends Model implements Item
      *
      * @var array
      */
-    protected $fillable = ['name', 'text'];
+    protected $fillable = ['name', 'text', 'folder_id'];
 
     public function getSpecificProps(bool $accessSelfRead): array
     {

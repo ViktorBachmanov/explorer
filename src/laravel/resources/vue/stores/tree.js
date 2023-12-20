@@ -12,5 +12,15 @@ export const useTreeStore = defineStore('tree', () => {
     rootFolder.value = data
   }
 
-  return { rootFolder, fetchTree }  
+  async function init() {
+    await fetchTree()
+  }
+
+  const selectedFolderId = ref(null)
+
+  function selectFolder(folderId) {
+    selectedFolderId.value = folderId
+  }
+
+  return { rootFolder, fetchTree, init, selectFolder, selectedFolderId }  
 })

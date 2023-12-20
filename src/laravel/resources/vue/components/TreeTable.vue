@@ -12,7 +12,7 @@ const usersStore = useUsersStore()
 const { usersAccessForSelect, userAccessFor } = storeToRefs(usersStore)
 
 const treeStore = useTreeStore()
-await treeStore.fetchTree()
+await treeStore.init()
 const { rootFolder } = storeToRefs(treeStore)
 
 const accesses = Object.keys(rootFolder.value.accessSelf)

@@ -55,10 +55,16 @@ trait Item
         return $accesses;
     }
 
-    public static function createItem(string $name)
+    public static function createItem(string $name, int $parentFolderId)
     {
+        $parentField = match (__CLASS__) {
+            'App\Models\Folder' => 'parent_id',
+            'App\Models\File' => 'folder_id',
+        };
+        
         $item = self::create([
             'name' => $name,
+            $parentField => $parentFolderId,
         ]);
 
         $accesses = [];
