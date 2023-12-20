@@ -3,8 +3,7 @@ import { storeToRefs } from 'pinia'
 import TreeTableRowFolder from './TreeTableRowFolder.vue';
 import { useUsersStore } from '../stores/users.js'
 import { useTreeStore } from '../stores/tree.js'
-import FolderButton from './FolderButton.vue';
-import FileButton from './FileButton.vue';
+import ItemButton from './ItemButton.vue';
 
 
 const usersStore = useUsersStore()
@@ -27,8 +26,8 @@ const capitalizedAccesses = accesses.map(access => {
     <thead>
       <tr>
         <th rowspan="2">
-          <FolderButton />
-          <FileButton />
+          <ItemButton class="bi bi-folder-plus" items="folders" />
+          <ItemButton class="bi bi-filetype-txt" items="files" />
         </th>
         <th colspan="3">Access for current user</th>
         <th colspan="3">

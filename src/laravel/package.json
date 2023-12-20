@@ -19,6 +19,7 @@
     "dependencies": {
         "@formkit/vue": "^1.4.0",
         "@vueuse/core": "^10.7.0",
+        "bootstrap-icons": "^1.11.2",
         "pinia": "^2.1.7"
     }
 }
