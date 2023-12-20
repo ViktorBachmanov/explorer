@@ -22,7 +22,7 @@ export const useUsersStore = defineStore('users', () => {
     name: 'Select user',
     email: 'empty@empty.ru'
   }
-  
+
   const userAccessFor = ref(emptyUser)
 
   watch(currentUser, async (user) => {
@@ -30,11 +30,11 @@ export const useUsersStore = defineStore('users', () => {
       userAccessFor.value = emptyUser
     }    await login(user)
 
-    await treeStore.fetchTree(userAccessFor.value.id)
+    await treeStore.fetchTree()
   })
 
-  watch(userAccessFor, async (user) => {
-    await treeStore.fetchTree(user.id)
+  watch(userAccessFor, async () => {
+    await treeStore.fetchTree()
   })
 
   const allUsers = computed(() => {

@@ -9,9 +9,13 @@ function open() {
   isOpen.value = true;
 }
 
-function close(e) {
+function close() {
+  isOpen.value = false;
+}
+
+function handleClickOnBacking(e) {
   if (!e?.dontClose && !isDisabled.value) {
-    isOpen.value = false;
+    close()
   }
 }
 
@@ -21,6 +25,7 @@ function handleClickOnDialog(e) {
 
 defineExpose({
   open,
+  close,
 })
 
 onMounted(() => {
@@ -46,7 +51,8 @@ function setDisabled(val) {
 
 <template>
   <Transition>
-    <div class="fixed inset-0 bg-gray-500/50 flex items-center justify-center" v-if="isOpen" @click="close">
+    <div class="fixed inset-0 bg-gray-500/50 flex items-center justify-center" v-if="isOpen"
+      @click="handleClickOnBacking">
       <div class="bg-gray-200 dark:bg-slate-800 rounded p-2" @click="handleClickOnDialog">
         <header class="flex justify-between font-medium ps-1">
           <slot name="header"></slot>

@@ -15,9 +15,9 @@ function open(iName) {
   modalDialog.value.open()
 }
 
-// function close() {
-//   isOpen.value = false;
-// }
+function close() {
+  modalDialog.value.close()
+}
 
 defineExpose({
   open,
@@ -32,6 +32,8 @@ async function handleSubmit(data, node) {
       ...data,
       parentFolderId: selectedFolderId.value
     })
+    await treeStore.fetchTree()
+    close();
   } catch (error) {
     switch (error.response.status) {
       case 401:
@@ -49,8 +51,8 @@ async function handleSubmit(data, node) {
         )
         break;
     }
-    // await new Promise((r) => setTimeout(r, 3000))
   }
+  // await new Promise((r) => setTimeout(r, 3000))
 }
 </script>
 

@@ -41,7 +41,7 @@ async function changeAccess(event) {
         value: event.target.checked,
       }
     })
-    await treeStore.fetchTree(userAccessFor.value.id)
+    await treeStore.fetchTree()
   } catch (error) {
   } finally {
     event.target.disabled = false
