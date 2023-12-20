@@ -10,7 +10,7 @@ function open() {
 }
 
 function close(e) {
-  if (!e?.dontClose) {
+  if (!e?.dontClose && !isDisabled.value) {
     isOpen.value = false;
   }
 }
@@ -32,9 +32,14 @@ onUnmounted(() => {
 })
 
 function escape(e) {
-  if (e.key === 'Escape') {
+  if (e.key === 'Escape' && !isDisabled.value) {
     close()
   }
+}
+
+const isDisabled = ref(false)
+function setDisabled(val) {
+  isDisabled.value = val
 }
 </script>
 
@@ -45,12 +50,12 @@ function escape(e) {
       <div class="bg-stone-500 rounded p-2" @click="handleClickOnDialog">
         <header class="flex justify-between">
           <slot name="header"></slot>
-          <button class="bi bi-x border rounded m-1 w-[1.33em]" style="font-size: 1.2em; line-size: 1.2em;"
-            @click="close"></button>
+          <button :disabled="isDisabled" class="bi bi-x border rounded m-1 w-[1.33em]" :class="{ disabled: isDisabled }"
+            style="font-size: 1.2em; line-size: 1.2em;" @click="close"></button>
         </header>
 
         <main>
-          <slot></slot>
+          <slot :setDisableState="setDisabled"></slot>
         </main>
       </div>
     </div>
@@ -68,5 +73,9 @@ function escape(e) {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+.disabled {
+  cursor: not-allowed;
 }
 </style>

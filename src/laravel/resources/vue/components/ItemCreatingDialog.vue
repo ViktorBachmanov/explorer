@@ -27,7 +27,7 @@ async function handleSubmit(data) {
   // } catch (error) {
   //   console.error(error)
   // }
-  await new Promise((r) => setTimeout(r, 2000))
+  await new Promise((r) => setTimeout(r, 3000))
 }
 </script>
 
@@ -38,8 +38,9 @@ async function handleSubmit(data) {
       Create {{ itemName }}
     </template>
 
-    <template #default>
+    <template #default="{ setDisableState }">
       <FormKit type="form" :actions="false" #default="{ disabled, state: { valid } }" @submit="handleSubmit">
+        {{ setDisableState(disabled) }}
         <FormKit name="name" label="Name" validation="required" />
         <FormKit type="submit" :disabled="!valid || disabled" outer-class="grow-0">
           <span v-if="disabled"
