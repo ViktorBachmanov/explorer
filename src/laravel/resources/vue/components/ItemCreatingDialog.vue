@@ -26,14 +26,19 @@ defineExpose({
 const treeStore = useTreeStore()
 const { selectedFolderId } = storeToRefs(treeStore)
 
-async function handleSubmit(data) {
+async function handleSubmit(data, node) {
   try {
     await axios.post(`/api/${itemName}s`, {
       ...data,
       parentFolderId: selectedFolderId.value
     })
   } catch (error) {
-    console.error(error)
+    node.setErrors(
+      [error.response.data.errors.name ? '' : error.response.data.message],
+      {
+        name: error.response.data.errors.name || ''
+      }
+    )
   }
   // await new Promise((r) => setTimeout(r, 3000))
 }
