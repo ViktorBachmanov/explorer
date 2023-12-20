@@ -33,20 +33,24 @@ async function handleSubmit(data, node) {
       parentFolderId: selectedFolderId.value
     })
   } catch (error) {
-    if (error.response.status === 401) {
-      node.setErrors(
-        [error.response.data.message],
-      )
-    } else {
-      node.setErrors(
-        [error.response.data.errors.name ? '' : error.response.data.message],
-        {
-          name: error.response.data.errors.name || ''
-        }
-      )
+    switch (error.response.status) {
+      case 401:
+      case 403:
+        node.setErrors(
+          [error.response.data.message],
+        )
+        break;
+      default:
+        node.setErrors(
+          [error.response.data.errors.name ? '' : error.response.data.message],
+          {
+            name: error.response.data.errors.name || ''
+          }
+        )
+        break;
     }
+    // await new Promise((r) => setTimeout(r, 3000))
   }
-  // await new Promise((r) => setTimeout(r, 3000))
 }
 </script>
 

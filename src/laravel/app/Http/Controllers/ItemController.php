@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Access\Response;
 
 use App\Enums\Access as AccessEnum;
+use App\Models\Folder;
 
 
 class ItemController extends Controller
@@ -23,6 +25,10 @@ class ItemController extends Controller
             'name' => 'required|string',
             'parentFolderId' => 'required|int',
         ]);
+
+        if ($request->user()->cannot('update', Folder::find($validated['parentFolderId']))) {
+           abort(403, "You can't write into this folder");
+        }
 
         $itemClass = Relation::getMorphedModel($items);
 
