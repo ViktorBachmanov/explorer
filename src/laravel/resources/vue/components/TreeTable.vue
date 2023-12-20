@@ -12,6 +12,11 @@ const treeStore = useTreeStore()
 await treeStore.fetchTree()
 const { rootFolder } = storeToRefs(treeStore)
 
+const accesses = Object.keys(rootFolder.value.accessSelf)
+const capitalizedAccesses = accesses.map(access => {
+  return access.charAt(0).toUpperCase() + access.slice(1)
+})
+
 </script>
 
 
@@ -32,13 +37,8 @@ const { rootFolder } = storeToRefs(treeStore)
       </tr>
 
       <tr>
-        <th>Read</th>
-        <th>Write</th>
-        <th>Grant</th>
-
-        <th>Read</th>
-        <th>Write</th>
-        <th>Grant</th>
+        <th v-for="access in capitalizedAccesses">{{ access }}</th>
+        <th v-for="access in capitalizedAccesses">{{ access }}</th>
       </tr>
     </thead>
 
