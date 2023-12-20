@@ -47,11 +47,11 @@ function setDisabled(val) {
 <template>
   <Transition>
     <div class="fixed inset-0 bg-gray-500/50 flex items-center justify-center" v-if="isOpen" @click="close">
-      <div class="bg-stone-500 rounded p-2" @click="handleClickOnDialog">
-        <header class="flex justify-between">
+      <div class="bg-gray-200 dark:bg-slate-800 rounded p-2" @click="handleClickOnDialog">
+        <header class="flex justify-between font-medium ps-1">
           <slot name="header"></slot>
-          <button :disabled="isDisabled" class="bi bi-x border rounded m-1 w-[1.33em]" :class="{ disabled: isDisabled }"
-            style="font-size: 1.2em; line-size: 1.2em;" @click="close"></button>
+          <button :disabled="isDisabled" class="bi bi-x border rounded m-1 w-[1.33em] border-black dark:border-white"
+            :class="{ disabled: isDisabled }" style="font-size: 1.2em; line-size: 1.2em;" @click="close"></button>
         </header>
 
         <main>
