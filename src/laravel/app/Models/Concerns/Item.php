@@ -4,6 +4,8 @@ namespace App\Models\Concerns;
 
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\User;
 use App\Enums\Access as AccessEnum;
 use App\Models\Folder;
@@ -51,5 +53,20 @@ trait Item
             $accesses[$case->value] = false;
         }
         return $accesses;
+    }
+
+    public static function createItem(string $name)
+    {
+        $item = self::create([
+            'name' => $name,
+        ]);
+
+        $accesses = [];
+
+        foreach (AccessEnum::cases() as $case) {
+            $accesses[$case->value] = true;
+        }
+
+        $item->users()->attach(Auth::id(), $accesses);
     }
 }

@@ -34,4 +34,6 @@ Route::middleware(['web'])->group(function () {
         ->middleware('auth:sanctum');
     Route::patch('/files/{file}', [FileController::class, 'update'])
         ->middleware('auth:sanctum')->can('update', 'file');
+    Route::post('/{items}', [ItemController::class, 'store'])
+        ->middleware('auth:sanctum');
 });

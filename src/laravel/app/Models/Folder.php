@@ -19,6 +19,13 @@ class Folder extends Model implements Item
     use ItemTrait;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name'];
+
+    /**
      * Get the children folders
      */
     public function folders(): HasMany

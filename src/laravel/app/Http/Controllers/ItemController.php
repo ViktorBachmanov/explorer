@@ -17,9 +17,17 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $items)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        $itemClass = Relation::getMorphedModel($items);
+
+        $itemClass::createItem($validated['name']);
+
+        return response()->json('Item has been created successfully', 201);
     }
 
     /**
