@@ -1,9 +1,11 @@
 <script setup>
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import TreeTableRowFolder from './TreeTableRowFolder.vue';
 import { useUsersStore } from '../stores/users.js'
 import { useTreeStore } from '../stores/tree.js'
 import ItemButton from './ItemButton.vue';
+import ItemCreatingDialog from './ItemCreatingDialog.vue';
 
 
 const usersStore = useUsersStore()
@@ -18,6 +20,8 @@ const capitalizedAccesses = accesses.map(access => {
   return access.charAt(0).toUpperCase() + access.slice(1)
 })
 
+const itemCreatingDialog = ref(null)
+
 </script>
 
 
@@ -26,8 +30,8 @@ const capitalizedAccesses = accesses.map(access => {
     <thead>
       <tr>
         <th rowspan="2">
-          <ItemButton class="bi bi-folder-plus" items="folders" />
-          <ItemButton class="bi bi-filetype-txt" items="files" />
+          <ItemButton class="bi bi-folder-plus" @click="itemCreatingDialog.open('folder')" />
+          <ItemButton class="bi bi-filetype-txt" @click="itemCreatingDialog.open('file')" />
         </th>
         <th colspan="3">Access for current user</th>
         <th colspan="3">
@@ -50,6 +54,8 @@ const capitalizedAccesses = accesses.map(access => {
       <TreeTableRowFolder :folder="rootFolder" :level="1" :initial-open="true" />
     </tbody>
   </table>
+
+  <ItemCreatingDialog ref="itemCreatingDialog" />
 </template>
 
 
