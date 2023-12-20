@@ -22,7 +22,18 @@ trait Item
             ->withPivot(AccessEnum::Read->value, AccessEnum::Write->value, AccessEnum::Grant->value);
     }
 
-    public function createAccess(int $userId, AccessEnum $accessType, bool $accessValue): void
+    public function updateAccess(int $userIdAccessFor, AccessEnum $accessType, bool $accessValue): void
+    {
+        $affectedRows = $this->users()->updateExistingPivot($userIdAccessFor, [
+            $accessType->value => $accessValue,
+        ]);
+      
+        if ($affectedRows == 0) {
+            $this->createAccess($userIdAccessFor, $accessType, $accessValue);
+        }
+    }
+
+    private function createAccess(int $userId, AccessEnum $accessType, bool $accessValue): void
     {
         $this->users()->attach($userId, [$accessType->value => $accessValue]);
     }

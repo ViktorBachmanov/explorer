@@ -83,13 +83,7 @@ class ItemController extends Controller
 
         Gate::authorize('change-access', [$item, $accessType]);
 
-        $affectedRows = $item->users()->updateExistingPivot($validated['userIdAccessFor'], [
-            $accessType->value => $accessValue,
-        ]);
-      
-        if ($affectedRows == 0) {
-            $item->createAccess($validated['userIdAccessFor'], $accessType, $accessValue);
-        }
+        $item->updateAccess($validated['userIdAccessFor'], $accessType, $accessValue);
 
     }
 }
