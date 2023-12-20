@@ -39,8 +39,13 @@ async function handleSubmit(data) {
     </template>
 
     <template #default>
-      <FormKit type="form" submit-label="Create" @submit="handleSubmit">
-        <FormKit name="name" label="Name" />
+      <FormKit type="form" :actions="false" #default="{ disabled, state: { valid } }" @submit="handleSubmit">
+        <FormKit name="name" label="Name" validation="required" />
+        <FormKit type="submit" :disabled="!valid || disabled" outer-class="grow-0">
+          <span v-if="disabled"
+            class='w-5 h-5 border-2 border-white border-r-transparent mr-2 rounded-full animate-spin'></span>
+          <span>Create</span>
+        </FormKit>
       </FormKit>
     </template>
   </ModalDialog>
