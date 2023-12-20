@@ -1,23 +1,26 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import axios from 'axios'
+import { getNode } from '@formkit/core'
 import { useTreeStore } from '../stores/tree.js'
 
 
 const isOpen = ref(false)
 
-const text = ref('')
 const writeAccess = ref(null)
 
 const treeStore = useTreeStore()
 
 let fileId, initialText
 
-function open(id, content, selfWriteAccess) {
+async function open(id, content, selfWriteAccess) {
   fileId = id
-  text.value = initialText = content
+  initialText = content
   writeAccess.value = selfWriteAccess
   isOpen.value = true
+  await nextTick()
+  const textNode = getNode('text')
+  textNode.input(initialText)
 }
 
 function close() {
@@ -87,8 +90,8 @@ function handleClickOnDialog(e) {
         <h3 class="text-xl font-medium mb-4">File text</h3>
         <FormKit type="form" :actions="false" #default="{ disabled, state: { valid } }" @submit="handleSubmit"
           :config="{ validationVisibility: 'submit' }">
-          <FormKit name="text" type="textarea" :validation-rules="{ textChanged }" validation="+textChanged"
-            input-class="dark:bg-gray-800 dark:text-zinc-200 p-2 w-80" v-model="text" :readonly="!writeAccess" />
+          <FormKit id="text" name="text" type="textarea" :validation-rules="{ textChanged }" validation="+textChanged"
+            input-class="dark:bg-gray-800 dark:text-zinc-200 p-2 w-80" :readonly="!writeAccess" />
           <div class="flex justify-end gap-x-2">
             <FormKit type="submit" :disabled="!valid || disabled" outer-class="grow-0" v-if="writeAccess">
               <span v-if="disabled"
@@ -96,7 +99,7 @@ function handleClickOnDialog(e) {
               <span>Save</span>
             </FormKit>
             <FormKit type="button" :disabled="disabled" label="Close" @click="close"
-              input-class="dark:bg-sky-800 dark:text-zinc-200" outer-class="grow-0" />
+              input-class="dark:!bg-sky-800 dark:text-zinc-200" outer-class="grow-0" />
           </div>
         </FormKit>
       </div>
