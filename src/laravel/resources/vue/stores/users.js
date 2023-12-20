@@ -16,6 +16,14 @@ export const useUsersStore = defineStore('users', () => {
   const treeStore = useTreeStore()
 
   const currentUser = ref(guestUser)
+  
+  const emptyUser = {
+    id: -1,
+    name: 'Select user',
+    email: 'empty@empty.ru'
+  }
+  
+  const userAccessFor = ref(emptyUser)
 
   watch(currentUser, async (user) => {
     if (user.id === userAccessFor.value.id) {
@@ -25,20 +33,16 @@ export const useUsersStore = defineStore('users', () => {
     await treeStore.fetchTree(userAccessFor.value.id)
   })
 
+  watch(userAccessFor, async (user) => {
+    await treeStore.fetchTree(user.id)
+  })
+
   const allUsers = computed(() => {
     return [
       guestUser,
       ...users.value
     ]
   })
-
-
-  const emptyUser = {
-    id: -1,
-    name: 'Select user',
-    email: 'empty@empty.ru'
-  }
-  const userAccessFor = ref(emptyUser)
 
   const usersAccessForSelect = computed(() => {
     return [

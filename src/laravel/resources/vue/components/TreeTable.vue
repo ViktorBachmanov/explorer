@@ -1,5 +1,4 @@
 <script setup>
-import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import TreeTableRowFolder from './TreeTableRowFolder.vue';
 import { useUsersStore } from '../stores/users.js'
@@ -13,9 +12,6 @@ const treeStore = useTreeStore()
 await treeStore.fetchTree()
 const { rootFolder } = storeToRefs(treeStore)
 
-watch(userAccessFor, async (user) => {
-  await treeStore.fetchTree(user.id)
-})
 </script>
 
 
