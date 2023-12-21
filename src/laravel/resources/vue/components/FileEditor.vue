@@ -3,9 +3,8 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import axios from 'axios'
 import { getNode } from '@formkit/core'
 import { useTreeStore } from '../stores/tree.js'
+import ModalDialog from './lib/ModalDialog.vue'
 
-
-const isOpen = ref(false)
 
 const writeAccess = ref(null)
 
@@ -17,33 +16,21 @@ async function open(id, content, selfWriteAccess) {
   fileId = id
   initialText = content
   writeAccess.value = selfWriteAccess
-  isOpen.value = true
+  modalDialog.value.open()
   await nextTick()
   const textNode = getNode('text')
   textNode.input(initialText)
 }
 
+const modalDialog = ref(null)
+
 function close() {
-  isOpen.value = false
+  modalDialog.value.close()
 }
 
 defineExpose({
   open,
 })
-
-onMounted(() => {
-  addEventListener('keyup', escape)
-})
-
-onUnmounted(() => {
-  removeEventListener('keyup', escape)
-})
-
-function escape(e) {
-  if (e.key === 'Escape') {
-    close()
-  }
-}
 
 async function handleSubmit(data, node) {
   try {
@@ -70,41 +57,31 @@ async function handleSubmit(data, node) {
 function textChanged(node) {
   return node.value !== initialText
 }
-
-function handleClose(e) {
-  if (!e.dontClose) {
-    close()
-  }
-}
-
-function handleClickOnDialog(e) {
-  e.dontClose = true
-}
 </script>
 
 
 <template>
-  <Transition>
-    <div class="fixed inset-0 bg-gray-500/50 flex items-center justify-center" v-if="isOpen" @click="handleClose">
-      <div class="bg-stone-500 rounded p-2" @click="handleClickOnDialog">
-        <h3 class="text-xl font-medium mb-4">File text</h3>
-        <FormKit type="form" :actions="false" #default="{ disabled, state: { valid } }" @submit="handleSubmit"
-          :config="{ validationVisibility: 'submit' }">
-          <FormKit id="text" name="text" type="textarea" :validation-rules="{ textChanged }" validation="+textChanged"
-            input-class="dark:bg-gray-800 dark:text-zinc-200 p-2 w-80" :readonly="!writeAccess" />
-          <div class="flex justify-end gap-x-2">
-            <FormKit type="submit" :disabled="!valid || disabled" outer-class="grow-0" v-if="writeAccess">
-              <span v-if="disabled"
-                class='w-5 h-5 border-2 border-white border-r-transparent mr-2 rounded-full animate-spin'></span>
-              <span>Save</span>
-            </FormKit>
-            <FormKit type="button" :disabled="disabled" label="Close" @click="close"
-              input-class="dark:!bg-sky-800 dark:text-zinc-200" outer-class="grow-0" />
-          </div>
-        </FormKit>
-      </div>
-    </div>
-  </Transition>
+  <ModalDialog ref="modalDialog">
+    <template #header>
+      File text
+    </template>
+
+    <template #default="{ setDisableState }">
+      <FormKit type="form" :actions="false" #default="{ disabled, state: { valid } }" @submit="handleSubmit"
+        :config="{ validationVisibility: 'submit' }">
+        {{ setDisableState(disabled) }}
+        <FormKit id="text" name="text" type="textarea" :validation-rules="{ textChanged }" validation="+textChanged"
+          input-class="dark:bg-gray-800 dark:text-zinc-200 p-2 w-80" :readonly="!writeAccess" />
+        <div class="flex justify-end gap-x-2">
+          <FormKit type="submit" :disabled="!valid || disabled" outer-class="grow-0" v-if="writeAccess">
+            <span v-if="disabled"
+              class='w-5 h-5 border-2 border-white border-r-transparent mr-2 rounded-full animate-spin'></span>
+            <span>Save</span>
+          </FormKit>
+        </div>
+      </FormKit>
+    </template>
+  </ModalDialog>
 </template>
 
 

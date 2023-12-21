@@ -56,7 +56,7 @@ function setDisabled(val) {
       <div class="bg-gray-200 dark:bg-slate-800 rounded p-2" @click="handleClickOnDialog">
         <header class="flex justify-between font-medium ps-1">
           <slot name="header"></slot>
-          <button :disabled="isDisabled" class="bi bi-x border rounded m-1 w-[1.33em] border-black dark:border-white"
+          <button :disabled="isDisabled" class="bi bi-x border rounded m-1 mb-3 w-[1.33em] border-black dark:border-white"
             :class="{ disabled: isDisabled }" style="font-size: 1.2em; line-size: 1.2em;" @click="close"></button>
         </header>
 
