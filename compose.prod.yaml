@@ -1,7 +1,8 @@
 services:
   nginx:
     ports: 
-      - "443:443"
+      - "85:85"
+      - "445:445"
     volumes:
       - ./src/nginx/certbot/www/:/var/www/certbot/:ro
       - ./src/nginx/certbot/conf/:/etc/nginx/ssl/:ro

@@ -1,6 +1,6 @@
 server {
-    listen 80;
-    listen [::]:80;
+    listen 85;
+    listen [::]:85;
     server_name explorer.cnc-op.ru www.explorer.cnc-op.ru;
 
     server_tokens off;
@@ -14,13 +14,13 @@ server {
     }
 
     location / {
-      return 301 https://$host$request_uri;
+      return 301 https://$host:445$request_uri;
     }
 }
 
 server {
-    listen 443 default_server ssl http2;
-    listen [::]:443 ssl http2;
+    listen 445 default_server ssl http2;
+    listen [::]:445 ssl http2;
     server_name explorer.cnc-op.ru;
     
     ssl_certificate /etc/nginx/ssl/live/explorer.cnc-op.ru/fullchain.pem;
