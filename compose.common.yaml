@@ -6,6 +6,7 @@ services:
       target: ${TARGET}
     ports: 
       - "80:80"
+    restart: always
     volumes:
       - ./src/laravel/:/var/www/html/
     networks:
