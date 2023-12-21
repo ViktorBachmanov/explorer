@@ -45,10 +45,10 @@ class Folder extends Model implements Item
     {
         return [
             'folders' => $accessSelfRead 
-                ? ItemResource::collection($this->folders)
+                ? ItemResource::collection($this->folders->sortBy('name', SORT_NATURAL))
                 : [],
             'files' => $accessSelfRead 
-                ? ItemResource::collection($this->files)
+                ? ItemResource::collection($this->files->sortBy('name', SORT_NATURAL))
                 : [],
         ];
 
