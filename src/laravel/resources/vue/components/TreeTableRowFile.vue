@@ -1,15 +1,30 @@
 <script setup>
-import { inject } from 'vue'
+import { ref, inject, onMounted, onBeforeUnmount } from 'vue'
 import TheIndent from './TheIndent.vue';
 import TreeTableAccessCells from './TreeTableAccessCells.vue'
 
 
-defineProps({
+const props = defineProps({
   file: Object,
   level: Number,
 })
 
 const fileEditor = inject('fileEditor')
+
+const fileLabel = ref(null)
+
+onMounted(() => {
+  fileLabel.value.addEventListener('dblclick', openFileEditor)
+})
+
+onBeforeUnmount(() => {
+  fileLabel.value.removeEventListener('dblclick', openFileEditor)
+})
+
+function openFileEditor() {
+  console.log('dblclick')
+  fileEditor.value.open(props.file.id, props.file.text, props.file.accessSelf.write)
+}
 </script>
 
 
@@ -18,7 +33,7 @@ const fileEditor = inject('fileEditor')
     <td :style="{ paddingLeft: `${level * 1}em`, }">
       <div class="item-label">
         <TheIndent />
-        <span class="p-2 cursor-pointer" @click="fileEditor.open(file.id, file.text, file.accessSelf.write)">
+        <span ref="fileLabel" class="p-2 cursor-pointer">
           {{ file.name }}
         </span>
       </div>
