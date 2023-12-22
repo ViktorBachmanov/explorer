@@ -94,7 +94,11 @@ class ItemController extends Controller
 
         $itemClass = Relation::getMorphedModel($items);
 
-        $item = $itemClass::find($itemId);
+        try {
+            $item = $itemClass::find($itemId);
+        } catch (\Error) {
+            abort(422, 'You must select an item to rename');
+        }
 
         Gate::authorize('rename', $item);
 

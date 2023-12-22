@@ -14,7 +14,7 @@ export const useTreeStore = defineStore('tree', () => {
 
     rootFolder.value = data
 
-    // selectedItem.value = nullItem
+    selectedItem.value = nullItem
   }
 
   async function init() {

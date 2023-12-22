@@ -27,7 +27,7 @@ function openFileEditor() {
   fileEditor.value.open(props.file.id, props.file.text, props.file.accessSelf.write)
 }
 
-const { isSelected, selectItem } = useSelectItem('file', props.file.id, props.file.name)
+const { isSelected, selectItem } = useSelectItem('file', props.file.id)
 </script>
 
 
@@ -36,7 +36,7 @@ const { isSelected, selectItem } = useSelectItem('file', props.file.id, props.fi
     <td :style="{ paddingLeft: `${level * 1}em`, }">
       <div class="item-label">
         <TheIndent />
-        <span ref="fileLabel" class="p-2 cursor-pointer" :class="{ selected: isSelected }" @click="selectItem">
+        <span ref="fileLabel" class="p-2 cursor-pointer" :class="{ selected: isSelected }" @click="selectItem(file)">
           {{ file.name }}
         </span>
       </div>

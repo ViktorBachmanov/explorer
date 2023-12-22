@@ -38,9 +38,9 @@ async function handleSubmit(data, node) {
         break;
       default:
         node.setErrors(
-          [error.response.data.errors.newName ? '' : error.response.data.message],
+          [error.response.data.errors?.newName ? '' : error.response.data.message],
           {
-            newName: error.response.data.errors.newName || ''
+            newName: error.response.data.errors?.newName || ''
           }
         )
         break;

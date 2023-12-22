@@ -5,6 +5,7 @@ namespace App\Models\Concerns;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\UniqueConstraintViolationException;
 
 use App\Models\User;
 use App\Enums\Access as AccessEnum;
@@ -84,7 +85,11 @@ trait Item
     
     public function rename(string $newName): void
     {
-        $this->update(['name' => $newName]);
+        try {
+            $this->update(['name' => $newName]);
+        } catch (UniqueConstraintViolationException) {
+            abort(409, 'Item with this name already exists in the folder');
+        }
     }
 
     private function createAccess(int $userId, AccessEnum $accessType, bool $accessValue): void

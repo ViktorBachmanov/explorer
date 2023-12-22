@@ -29,7 +29,7 @@ const isOpen = ref(props.initialOpen)
 
 // const isSelected = computed(() => selectedItem.value.type === 'folder' && selectedItem.value.id === props.folder.id)
 
-const { isSelected, selectItem } = useSelectItem('folder', props.folder.id, props.folder.name)
+const { isSelected, selectItem } = useSelectItem('folder', props.folder.id)
 </script>
 
 
@@ -40,7 +40,8 @@ const { isSelected, selectItem } = useSelectItem('folder', props.folder.id, prop
         <TheIndent>
           <ArrowRight v-if="folder.folders?.length || folder.files?.length" :down="isOpen" @click="isOpen = !isOpen" />
         </TheIndent>
-        <span class="folder-label bg-amber-200 dark:bg-amber-800" :class="{ selected: isSelected }" @click="selectItem">
+        <span class="folder-label bg-amber-200 dark:bg-amber-800" :class="{ selected: isSelected }"
+          @click="selectItem(folder)">
           {{ folder.name }}
         </span>
       </div>
