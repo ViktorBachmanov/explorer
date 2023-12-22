@@ -5,9 +5,9 @@ namespace App\Models\Contracts;
 
 interface Item
 {
-    public function getAccesForGuest(): array;   
+    public function getAccessesForGuest(): array;   
     
-    public function getAccessForUser(int $userId): array;   
+    public function getAccessesForUser(int $userId): array;   
 
     public function getSpecificProps(bool $accessSelfRead): array;    
 }

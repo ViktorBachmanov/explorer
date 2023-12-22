@@ -32,9 +32,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('change-access', function (User $user, Item $item, AccessEnum $accessType) {
-            return $item->getAccessForUser($user->id)[$accessType->value]
+            return $item->getAccessesForUser($user->id)[$accessType->value]
                 ? Response::allow()
                 : Response::deny("You don't have access rights to this item");
+        });
+
+        Gate::define('rename', function (User $user, Item $item) {
+            return $item->getAccessesForUser($user->id)[AccessEnum::Write->value]
+                ? Response::allow()
+                : Response::deny("You don't have write permission to this item");
         });
     }
 }

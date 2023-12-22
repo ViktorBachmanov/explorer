@@ -8,10 +8,7 @@ import { useTreeStore } from '../stores/tree.js'
 
 const modalDialog = ref(null)
 
-let itemName = ''
-
 function open() {
-  itemName = iName;
   modalDialog.value.open()
 }
 
@@ -24,32 +21,32 @@ defineExpose({
 })
 
 const treeStore = useTreeStore()
-const { selectedFolderId } = storeToRefs(treeStore)
+const { selectedItem } = storeToRefs(treeStore)
 
 async function handleSubmit(data, node) {
-  // try {
-  //   await axios.post(`/api/${itemName}s`, data)
-  //   await treeStore.fetchTree()
-  //   close();
-  // } catch (error) {
-  //   switch (error.response.status) {
-  //     case 401:
-  //     case 403:
-  //       node.setErrors(
-  //         [error.response.data.message],
-  //       )
-  //       break;
-  //     default:
-  //       node.setErrors(
-  //         [error.response.data.errors.name ? '' : error.response.data.message],
-  //         {
-  //           name: error.response.data.errors.name || ''
-  //         }
-  //       )
-  //       break;
-  //   }
-  // }
-  await new Promise((r) => setTimeout(r, 3000))
+  try {
+    await axios.patch(`/api/rename/${selectedItem.value.type}s/${selectedItem.value.id}`, data)
+    await treeStore.fetchTree()
+    close();
+  } catch (error) {
+    switch (error.response.status) {
+      case 401:
+      case 403:
+        node.setErrors(
+          [error.response.data.message],
+        )
+        break;
+      default:
+        node.setErrors(
+          [error.response.data.errors.newName ? '' : error.response.data.message],
+          {
+            newName: error.response.data.errors.newName || ''
+          }
+        )
+        break;
+    }
+  }
+  // await new Promise((r) => setTimeout(r, 3000))
 }
 </script>
 
@@ -57,13 +54,14 @@ async function handleSubmit(data, node) {
 <template>
   <ModalDialog ref="modalDialog">
     <template #header>
-      Rename {{ itemName }}
+      Rename {{ selectedItem.type }}
     </template>
 
     <template #default="{ setDisableState }">
       <FormKit type="form" :actions="false" #default="{ disabled, state: { valid } }" @submit="handleSubmit">
         {{ setDisableState(disabled) }}
-        <FormKit type="text" name="oldName" label="Old name" inner-class="dark:bg-slate-700" readonly />
+        <FormKit type="text" name="currentName" label="Current name" inner-class="dark:bg-slate-700"
+          :value="selectedItem.name" readonly />
         <FormKit type="text" name="newName" label="New name" inner-class="dark:bg-slate-700" />
         <FormKit type="submit" :disabled="!valid || disabled" outer-class="grow-0">
           <span v-if="disabled"

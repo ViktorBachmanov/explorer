@@ -22,15 +22,15 @@ class Item extends JsonResource
 
         $user = $request->user();
         $accessSelf = $user
-            ? $this->getAccessForUser($request->user()->id)
-            : $this->getAccesForGuest();
+            ? $this->getAccessesForUser($request->user()->id)
+            : $this->getAccessesForGuest();
 
         $commonProps = [
             'id' => $this->id,
             'name' => $this->name,
             'accessSelf' => $accessSelf,
             'accessForUser' => $this->when(isset($userIdAccessFor) && $userIdAccessFor != -1, 
-                fn () => $this->getAccessForUser($userIdAccessFor)),            
+                fn () => $this->getAccessesForUser($userIdAccessFor)),            
         ];
 
         return $commonProps + $this->getSpecificProps($accessSelf[Access::Read->value]);

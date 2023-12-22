@@ -33,12 +33,7 @@ trait Item
         }
     }
 
-    private function createAccess(int $userId, AccessEnum $accessType, bool $accessValue): void
-    {
-        $this->users()->attach($userId, [$accessType->value => $accessValue]);
-    }
-
-    public function getAccessForUser(int $userId): array
+    public function getAccessesForUser(int $userId): array
     {
         if (User::find($userId)->is_admin) {
             foreach (AccessEnum::cases() as $case) {
@@ -58,7 +53,7 @@ trait Item
         return $accesses;
     }
 
-    public function getAccesForGuest(): array 
+    public function getAccessesForGuest(): array 
     {
         foreach (AccessEnum::cases() as $case) {
             $accesses[$case->value] = false;
@@ -85,5 +80,15 @@ trait Item
         }
 
         $item->users()->attach(Auth::id(), $accesses);
+    }
+    
+    public function rename(string $newName): void
+    {
+        $this->update(['name' => $newName]);
+    }
+
+    private function createAccess(int $userId, AccessEnum $accessType, bool $accessValue): void
+    {
+        $this->users()->attach($userId, [$accessType->value => $accessValue]);
     }
 }

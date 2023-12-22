@@ -40,7 +40,7 @@ class FolderPolicy
      */
     public function update(User $user, Folder $folder): Response
     {
-        return $folder->getAccessForUser($user->id)[AccessEnum::Write->value]
+        return $folder->getAccessesForUser($user->id)[AccessEnum::Write->value]
             ? Response::allow()
             : Response::deny("You don't have the 'write' access right for this folder");
     }

@@ -13,6 +13,8 @@ export const useTreeStore = defineStore('tree', () => {
     const { data } = await axios.get(`/api/tree?userIdAccessFor=${usersStore.userAccessFor.id}`)
 
     rootFolder.value = data
+
+    // selectedItem.value = nullItem
   }
 
   async function init() {

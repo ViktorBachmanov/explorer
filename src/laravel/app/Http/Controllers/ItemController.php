@@ -84,6 +84,20 @@ class ItemController extends Controller
         Gate::authorize('change-access', [$item, $accessType]);
 
         $item->updateAccess($validated['userIdAccessFor'], $accessType, $accessValue);
+    }
 
+    public function rename(Request $request, string $items, int $itemId)
+    {
+        $validated = $request->validate([
+            'newName' => 'required|string',
+        ]);
+
+        $itemClass = Relation::getMorphedModel($items);
+
+        $item = $itemClass::find($itemId);
+
+        Gate::authorize('rename', $item);
+
+        $item->rename($validated['newName']);
     }
 }

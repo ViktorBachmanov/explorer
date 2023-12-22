@@ -40,7 +40,7 @@ class FilePolicy
      */
     public function update(User $user, File $file): Response
     {
-        return $file->getAccessForUser($user->id)[AccessEnum::Write->value]
+        return $file->getAccessesForUser($user->id)[AccessEnum::Write->value]
             ? Response::allow()
             : Response::deny("You don't have the 'write' access right for this file");
     }

@@ -32,6 +32,8 @@ Route::middleware(['web'])->group(function () {
 
     Route::patch('/update-access/{items}/{id}', [ItemController::class, 'updateAccess'])
         ->middleware('auth:sanctum');
+    Route::patch('/rename/{items}/{id}', [ItemController::class, 'rename'])
+        ->middleware('auth:sanctum');
     Route::patch('/files/{file}', [FileController::class, 'update'])
         ->middleware('auth:sanctum')->can('update', 'file');
     Route::post('/{items}', [ItemController::class, 'store'])
