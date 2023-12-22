@@ -1,11 +1,12 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { storeToRefs } from 'pinia'
+// import { storeToRefs } from 'pinia'
 import TreeTableRowFile from './TreeTableRowFile.vue';
 import ArrowRight from './ArrowRight.vue'
 import TheIndent from './TheIndent.vue';
 import TreeTableAccessCells from './TreeTableAccessCells.vue'
-import { useTreeStore } from '../stores/tree.js'
+// import { useTreeStore } from '../stores/tree.js'
+import { useSelectItem } from '../composables/select-item.js'
 
 
 const props = defineProps({
@@ -19,14 +20,16 @@ const props = defineProps({
 
 const isOpen = ref(props.initialOpen)
 
-const treeStore = useTreeStore()
-const { selectedFolderId } = storeToRefs(treeStore)
+// const treeStore = useTreeStore()
+// const { selectedItem } = storeToRefs(treeStore)
 
-function selectFolder() {
-  treeStore.selectFolder(props.folder.id)
-}
+// function selectFolder() {
+//   treeStore.selectFolder('folder', props.folder.id, props.folder.name)
+// }
 
-const isSelected = computed(() => selectedFolderId.value === props.folder.id)
+// const isSelected = computed(() => selectedItem.value.type === 'folder' && selectedItem.value.id === props.folder.id)
+
+const { isSelected, selectItem } = useSelectItem('folder', props.folder.id, props.folder.name)
 </script>
 
 
@@ -37,7 +40,7 @@ const isSelected = computed(() => selectedFolderId.value === props.folder.id)
         <TheIndent>
           <ArrowRight v-if="folder.folders?.length || folder.files?.length" :down="isOpen" @click="isOpen = !isOpen" />
         </TheIndent>
-        <span class="folder-label bg-amber-200 dark:bg-amber-800" :class="{ selected: isSelected }" @click="selectFolder">
+        <span class="folder-label bg-amber-200 dark:bg-amber-800" :class="{ selected: isSelected }" @click="selectItem">
           {{ folder.name }}
         </span>
       </div>
