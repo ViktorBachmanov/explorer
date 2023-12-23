@@ -27,7 +27,7 @@ const treeStore = useTreeStore()
 const { selectedItem } = storeToRefs(treeStore)
 
 async function handleSubmit(data, node) {
-  if (selectedItem.value.type !== 'folder') {
+  if (selectedItem.value.type === 'file') {
     return
   }
 

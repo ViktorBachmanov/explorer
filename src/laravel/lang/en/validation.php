@@ -175,6 +175,7 @@ return [
         ],
         'parentFolderId' => [
             'required' => 'You must select a parent folder',
+            'gt' => 'You must select a parent folder',
         ],
     ],
 

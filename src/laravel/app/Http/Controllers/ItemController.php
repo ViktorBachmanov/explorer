@@ -23,7 +23,7 @@ class ItemController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string',
-            'parentFolderId' => 'required|int',
+            'parentFolderId' => 'required|int|gt:0',
         ]);
 
         if ($request->user()->cannot('update', Folder::find($validated['parentFolderId']))) {
