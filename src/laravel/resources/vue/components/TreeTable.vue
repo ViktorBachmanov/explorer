@@ -34,8 +34,10 @@ const itemRemovingDialog = ref(null)
     <thead>
       <tr>
         <th rowspan="2">
-          <ItemButton class="bi bi-folder-plus" @click="itemCreatingDialog.open('folder')" />
-          <ItemButton class="bi bi-filetype-txt" @click="itemCreatingDialog.open('file')" />
+          <div>
+            <ItemButton class="bi bi-folder-plus" @click="itemCreatingDialog.open('folder')" />
+            <ItemButton class="bi bi-filetype-txt" @click="itemCreatingDialog.open('file')" />
+          </div>
           <ItemButton class="bi bi-alphabet-uppercase" @click="itemRenamingDialog.open()" />
           <ItemButton class="bi bi-trash3" @click="itemRemovingDialog.open()" />
         </th>

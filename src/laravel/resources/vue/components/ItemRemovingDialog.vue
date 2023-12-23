@@ -50,7 +50,7 @@ async function handleSubmit(data, node) {
     <template #default="{ setDisableState }">
       <FormKit type="form" :actions="false" #default="{ disabled, state: { valid } }" @submit="handleSubmit">
         {{ setDisableState(disabled) }}
-        <span class="m-4">Remove '{{ selectedItem.name }}'?</span>
+        <div class="m-4">Remove '{{ selectedItem.name }}'?</div>
         <FormKit type="submit" :disabled="!valid || disabled" outer-class="grow-0">
           <span v-if="disabled"
             class='w-5 h-5 border-2 border-white border-r-transparent mr-2 rounded-full animate-spin'></span>

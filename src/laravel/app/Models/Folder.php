@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use App\Models\Contracts\Item;
 use App\Models\Concerns\Item as ItemTrait;
@@ -31,6 +32,14 @@ class Folder extends Model implements Item
     public function folders(): HasMany
     {
         return $this->hasMany(Folder::class, 'parent_id');
+    }
+
+    /**
+     * Get the parent folder that owns this folder
+     */
+    public function parentFolder(): BelongsTo
+    {
+        return $this->belongsTo(Folder::class, 'parent_id');
     }
 
     /**

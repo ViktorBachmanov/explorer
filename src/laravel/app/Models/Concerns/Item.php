@@ -9,7 +9,6 @@ use Illuminate\Database\UniqueConstraintViolationException;
 
 use App\Models\User;
 use App\Enums\Access as AccessEnum;
-use App\Models\Folder;
 
 trait Item
 {
