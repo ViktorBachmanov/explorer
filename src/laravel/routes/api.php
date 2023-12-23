@@ -30,14 +30,11 @@ Route::middleware(['web'])->group(function () {
     Route::post('/login', [UserController::class, 'login']);
     Route::post('/logout', [UserController::class, 'logout']);
 
-    Route::patch('/update-access/{items}/{id}', [ItemController::class, 'updateAccess'])
-        ->middleware('auth:sanctum');
-    Route::patch('/rename/{items}/{id}', [ItemController::class, 'rename'])
-        ->middleware('auth:sanctum');
-    Route::patch('/files/{file}', [FileController::class, 'update'])
-        ->middleware('auth:sanctum')->can('update', 'file');
-    Route::post('/{items}', [ItemController::class, 'store'])
-        ->middleware('auth:sanctum');
-    Route::delete('/{items}/{id}', [ItemController::class, 'destroy'])
-        ->middleware('auth:sanctum');
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::patch('/update-access/{items}/{id}', [ItemController::class, 'updateAccess']);
+        Route::patch('/rename/{items}/{id}', [ItemController::class, 'rename']);
+        Route::patch('/files/{file}', [FileController::class, 'update'])->can('update', 'file');
+        Route::post('/{items}', [ItemController::class, 'store']);
+        Route::delete('/{items}/{id}', [ItemController::class, 'destroy']);
+    });
 });
