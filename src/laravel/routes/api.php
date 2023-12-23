@@ -38,4 +38,6 @@ Route::middleware(['web'])->group(function () {
         ->middleware('auth:sanctum')->can('update', 'file');
     Route::post('/{items}', [ItemController::class, 'store'])
         ->middleware('auth:sanctum');
+    Route::delete('/{items}/{id}', [ItemController::class, 'destroy'])
+        ->middleware('auth:sanctum');
 });

@@ -7,6 +7,7 @@ import { useTreeStore } from '../stores/tree.js'
 import ItemButton from './ItemButton.vue';
 import ItemCreatingDialog from './ItemCreatingDialog.vue';
 import ItemRenamingDialog from './ItemRenamingDialog.vue';
+import ItemRemovingDialog from './ItemRemovingDialog.vue';
 
 
 const usersStore = useUsersStore()
@@ -23,6 +24,7 @@ const capitalizedAccesses = accesses.map(access => {
 
 const itemCreatingDialog = ref(null)
 const itemRenamingDialog = ref(null)
+const itemRemovingDialog = ref(null)
 
 </script>
 
@@ -35,8 +37,7 @@ const itemRenamingDialog = ref(null)
           <ItemButton class="bi bi-folder-plus" @click="itemCreatingDialog.open('folder')" />
           <ItemButton class="bi bi-filetype-txt" @click="itemCreatingDialog.open('file')" />
           <ItemButton class="bi bi-alphabet-uppercase" @click="itemRenamingDialog.open()" />
-          <!-- <button class="block mt-2 mx-auto">Rename</button> -->
-          <!-- <FormKit type="button" outer-class="mt-2 mx-auto" wrapper-class="text-center">Rename</FormKit> -->
+          <ItemButton class="bi bi-trash3" @click="itemRemovingDialog.open()" />
         </th>
         <th colspan="3">Access for current user</th>
         <th colspan="3">
@@ -62,6 +63,7 @@ const itemRenamingDialog = ref(null)
 
   <ItemCreatingDialog ref="itemCreatingDialog" />
   <ItemRenamingDialog ref="itemRenamingDialog" />
+  <ItemRemovingDialog ref="itemRemovingDialog" />
 </template>
 
 

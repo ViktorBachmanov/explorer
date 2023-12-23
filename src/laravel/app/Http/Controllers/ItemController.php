@@ -56,9 +56,19 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $items, int $itemId)
     {
-        //
+        $itemClass = Relation::getMorphedModel($items);
+
+        try {
+            $item = $itemClass::find($itemId);
+        } catch (\Error) {
+            abort(422, 'You must select an item to remove');
+        }
+
+        Gate::authorize('remove', $item);
+
+        $item->delete();
     }
 
 

@@ -42,5 +42,11 @@ class AuthServiceProvider extends ServiceProvider
                 ? Response::allow()
                 : Response::deny("You don't have write permission to this item");
         });
+
+        Gate::define('remove', function (User $user, Item $item) {
+            return $item->getAccessesForUser($user->id)[AccessEnum::Write->value]
+                ? Response::allow()
+                : Response::deny("You don't have write permission to this item");
+        });
     }
 }
