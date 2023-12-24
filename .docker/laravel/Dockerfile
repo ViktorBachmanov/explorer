@@ -4,8 +4,8 @@ FROM php:8.2-fpm AS base
 RUN apt-get update && apt-get install -y \
 		libzip-dev \
         zip \
-  && docker-php-ext-install pdo_mysql bcmath zip \
-  && pecl install redis && docker-php-ext-enable redis
+  && docker-php-ext-install pdo_mysql bcmath zip
+  # && pecl install redis && docker-php-ext-enable redis
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
