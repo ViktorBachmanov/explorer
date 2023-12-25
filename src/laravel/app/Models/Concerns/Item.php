@@ -24,12 +24,25 @@ trait Item
 
     public function updateAccess(int $userIdAccessFor, AccessEnum $accessType, bool $accessValue): void
     {
-        $affectedRows = $this->users()->updateExistingPivot($userIdAccessFor, [
-            $accessType->value => $accessValue,
-        ]);
+        $accesses = [$accessType->value => $accessValue];
+
+        switch ($accessType) {
+            case AccessEnum::Write:
+                if ($accessValue === true) {
+                    $accesses[AccessEnum::Read->value] = true;
+                }
+                break;
+            case AccessEnum::Read:
+                if ($accessValue === false) {
+                    $accesses[AccessEnum::Write->value] = false;
+                }
+                break;
+        }
+
+        $affectedRows = $this->users()->updateExistingPivot($userIdAccessFor, $accesses);
       
         if ($affectedRows == 0) {
-            $this->createAccess($userIdAccessFor, $accessType, $accessValue);
+            $this->users()->attach($userIdAccessFor, $accesses);
         }
     }
 
@@ -89,10 +102,5 @@ trait Item
         } catch (UniqueConstraintViolationException) {
             abort(409, 'Item with this name already exists in the folder');
         }
-    }
-
-    private function createAccess(int $userId, AccessEnum $accessType, bool $accessValue): void
-    {
-        $this->users()->attach($userId, [$accessType->value => $accessValue]);
     }
 }
